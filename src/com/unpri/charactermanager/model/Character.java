@@ -1,11 +1,13 @@
+
 package com.unpri.charactermanager.model;
 
+import java.util.Objects;
+
 /**
- * Class Character untuk mengelola data karakter.
+ * Class Character untuk menyimpan data karakter.
  */
 public class Character {
 
-    // Atribut karakter
     private int id;
     private String name;
     private CharacterType type;
@@ -14,14 +16,9 @@ public class Character {
     private int attackPower;
     private int mana;
 
-    /**
-     * Constructor untuk membuat karakter baru.
-     */
     public Character(String name, CharacterType type, int level) {
         if (level < 1) {
-            throw new IllegalArgumentException(
-                    "Level harus lebih besar atau sama dengan 1"
-            );
+            throw new IllegalArgumentException("Level minimal 1");
         }
 
         this.id = 0;
@@ -33,9 +30,6 @@ public class Character {
         this.mana = 0;
     }
 
-    /**
-     * Constructor untuk karakter yang dimuat dari database.
-     */
     public Character(
             int id,
             String name,
@@ -45,9 +39,7 @@ public class Character {
             int attackPower
     ) {
         if (level < 1) {
-            throw new IllegalArgumentException(
-                    "Level harus lebih besar atau sama dengan 1"
-            );
+            throw new IllegalArgumentException("Level minimal 1");
         }
 
         this.id = id;
@@ -59,19 +51,13 @@ public class Character {
         this.mana = 0;
     }
 
-    // Menghitung HP berdasarkan level
     private int calculateBaseHP() {
         return 100 + (level * 10);
     }
 
-    // Menghitung attack power berdasarkan level
     private int calculateBaseAttack() {
         return 10 + (level * 5);
     }
-
-    // =========================
-    // GETTER
-    // =========================
 
     public int getId() {
         return id;
@@ -101,10 +87,6 @@ public class Character {
         return mana;
     }
 
-    // =========================
-    // SETTER
-    // =========================
-
     public void setId(int id) {
         this.id = id;
     }
@@ -119,9 +101,7 @@ public class Character {
 
     public void setLevel(int level) {
         if (level < 1) {
-            throw new IllegalArgumentException(
-                    "Level harus lebih besar atau sama dengan 1"
-            );
+            throw new IllegalArgumentException("Level minimal 1");
         }
 
         this.level = level;
@@ -149,9 +129,6 @@ public class Character {
         this.attackPower = attackPower;
     }
 
-    /**
-     * Setter mana dengan validasi.
-     */
     public void setMana(int mana) {
         if (mana < 0) {
             throw new IllegalArgumentException(
@@ -162,20 +139,35 @@ public class Character {
         this.mana = mana;
     }
 
-    // =========================
-    // MINI CHALLENGE
-    // =========================
-
-    /**
-     * Memeriksa apakah karakter masih hidup.
-     */
     public boolean isAlive() {
         return hitPoints > 0;
     }
 
-    // =========================
-    // TOSTRING
-    // =========================
+    /**
+     * Membandingkan dua karakter berdasarkan nama.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof Character)) {
+            return false;
+        }
+
+        Character other = (Character) obj;
+
+        return Objects.equals(this.name, other.name);
+    }
+
+    /**
+     * hashCode dibuat konsisten dengan equals.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 
     @Override
     public String toString() {

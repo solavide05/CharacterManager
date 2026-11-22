@@ -1,7 +1,8 @@
+
 package com.unpri.charactermanager.model;
 
 /**
- * Enum untuk menentukan jenis karakter.
+ * Jenis karakter dalam permainan.
  */
 public enum CharacterType {
     WARRIOR,
