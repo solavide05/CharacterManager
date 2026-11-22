@@ -11,36 +11,46 @@ public class CharacterManager {
         characterList = new ArrayList<>();
     }
 
-    // Menambahkan karakter dan mencegah duplikat nama
+    // Menambahkan karakter dan menolak nama duplikat
     public boolean addCharacter(Character character) {
+
         if (character == null) {
             return false;
         }
 
         if (findByName(character.getName()) != null) {
             System.out.println("Karakter " + character.getName()
-                    + " sudah ada. Tidak dapat ditambahkan.");
+                    + " sudah ada. Penambahan ditolak.");
             return false;
         }
 
         characterList.add(character);
+
         System.out.println("Karakter " + character.getName()
                 + " berhasil ditambahkan.");
+
         return true;
     }
 
     // Mencari karakter berdasarkan nama
     public Character findByName(String name) {
+
+        if (name == null) {
+            return null;
+        }
+
         for (Character character : characterList) {
             if (character.getName().equals(name)) {
                 return character;
             }
         }
+
         return null;
     }
 
     // Menghapus karakter berdasarkan nama
     public boolean removeCharacter(String name) {
+
         Character character = findByName(name);
 
         if (character == null) {
@@ -49,22 +59,25 @@ public class CharacterManager {
         }
 
         characterList.remove(character);
+
         System.out.println("Karakter " + name + " berhasil dihapus.");
+
         return true;
     }
 
-    // Menghitung jumlah karakter
+    // Menghitung jumlah karakter dalam daftar
     public int getTotalCharacters() {
         return characterList.size();
     }
 
-    // Mengembalikan salinan daftar karakter
+    // Mengembalikan salinan daftar, bukan daftar asli
     public ArrayList<Character> getAllCharacters() {
         return new ArrayList<>(characterList);
     }
 
-    // MINI CHALLENGE 1: Menghitung rata-rata level
+    // Menghitung rata-rata level karakter
     public double getAverageLevel() {
+
         if (characterList.isEmpty()) {
             return 0;
         }
@@ -78,8 +91,9 @@ public class CharacterManager {
         return (double) totalLevel / characterList.size();
     }
 
-    // MINI CHALLENGE 2: Mencari karakter berdasarkan tipe
+    // Mencari karakter berdasarkan tipe
     public ArrayList<Character> findByType(CharacterType type) {
+
         ArrayList<Character> result = new ArrayList<>();
 
         if (type == null) {
@@ -93,5 +107,28 @@ public class CharacterManager {
         }
 
         return result;
+    }
+
+    /**
+     * Mencari karakter dengan attack power tertinggi.
+     *
+     * @return karakter terkuat atau null jika daftar kosong
+     */
+    public Character findStrongest() {
+
+        if (characterList.isEmpty()) {
+            return null;
+        }
+
+        Character strongest = characterList.get(0);
+
+        for (Character character : characterList) {
+            if (character.getAttackPower()
+                    > strongest.getAttackPower()) {
+                strongest = character;
+            }
+        }
+
+        return strongest;
     }
 }
