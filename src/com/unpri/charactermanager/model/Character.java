@@ -18,7 +18,6 @@ public class Character {
      * Constructor untuk membuat karakter baru.
      */
     public Character(String name, CharacterType type, int level) {
-
         if (level < 1) {
             throw new IllegalArgumentException(
                     "Level harus lebih besar atau sama dengan 1"
@@ -29,7 +28,6 @@ public class Character {
         this.name = name;
         this.type = type;
         this.level = level;
-
         this.hitPoints = calculateBaseHP();
         this.attackPower = calculateBaseAttack();
         this.mana = 0;
@@ -46,7 +44,6 @@ public class Character {
             int hitPoints,
             int attackPower
     ) {
-
         if (level < 1) {
             throw new IllegalArgumentException(
                     "Level harus lebih besar atau sama dengan 1"
@@ -62,16 +59,12 @@ public class Character {
         this.mana = 0;
     }
 
-    /**
-     * Menghitung HP awal.
-     */
+    // Menghitung HP berdasarkan level
     private int calculateBaseHP() {
         return 100 + (level * 10);
     }
 
-    /**
-     * Menghitung attack power awal.
-     */
+    // Menghitung attack power berdasarkan level
     private int calculateBaseAttack() {
         return 10 + (level * 5);
     }
@@ -116,8 +109,15 @@ public class Character {
         this.id = id;
     }
 
-    public void setLevel(int level) {
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public void setType(CharacterType type) {
+        this.type = type;
+    }
+
+    public void setLevel(int level) {
         if (level < 1) {
             throw new IllegalArgumentException(
                     "Level harus lebih besar atau sama dengan 1"
@@ -129,11 +129,30 @@ public class Character {
         this.attackPower = calculateBaseAttack();
     }
 
+    public void setHitPoints(int hitPoints) {
+        if (hitPoints < 0) {
+            throw new IllegalArgumentException(
+                    "Hit Points tidak boleh negatif"
+            );
+        }
+
+        this.hitPoints = hitPoints;
+    }
+
+    public void setAttackPower(int attackPower) {
+        if (attackPower < 0) {
+            throw new IllegalArgumentException(
+                    "Attack Power tidak boleh negatif"
+            );
+        }
+
+        this.attackPower = attackPower;
+    }
+
     /**
      * Setter mana dengan validasi.
      */
     public void setMana(int mana) {
-
         if (mana < 0) {
             throw new IllegalArgumentException(
                     "Mana tidak boleh negatif"
@@ -160,14 +179,13 @@ public class Character {
 
     @Override
     public String toString() {
-
-        return "Character{id=" + id +
-                ", name='" + name + '\'' +
-                ", type=" + type +
-                ", level=" + level +
-                ", hp=" + hitPoints +
-                ", atk=" + attackPower +
-                ", mana=" + mana +
-                '}';
+        return "Character{id=" + id
+                + ", name='" + name + '\''
+                + ", type=" + type
+                + ", level=" + level
+                + ", hp=" + hitPoints
+                + ", atk=" + attackPower
+                + ", mana=" + mana
+                + '}';
     }
 }
