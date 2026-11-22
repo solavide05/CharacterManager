@@ -1,125 +1,119 @@
 
 import com.unpri.charactermanager.model.Character;
-import com.unpri.charactermanager.model.CharacterType;
 import com.unpri.charactermanager.model.CharacterManager;
+import com.unpri.charactermanager.model.CharacterType;
+import java.util.ArrayList;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        System.out.println("========================================");
-        System.out.println("   CHARACTER MANAGER v0.2 - AP6");
-        System.out.println("========================================");
-
         CharacterManager manager = new CharacterManager();
 
+        System.out.println("====================================");
+        System.out.println("       CHARACTER MANAGER AP6");
+        System.out.println("====================================");
+
         // 1. Menambahkan karakter
-        System.out.println("\n--- TAMBAH KARAKTER ---");
+        System.out.println("\n--- MENAMBAHKAN KARAKTER ---");
 
         manager.addCharacter(
-                new Character("Arjuna", CharacterType.WARRIOR, 5)
-        );
+                new Character("Arjuna", CharacterType.WARRIOR, 5));
 
         manager.addCharacter(
-                new Character("Merlin", CharacterType.MAGE, 3)
-        );
+                new Character("Merlin", CharacterType.MAGE, 3));
 
         manager.addCharacter(
-                new Character("Athena", CharacterType.ARCHER, 4)
-        );
+                new Character("Athena", CharacterType.ARCHER, 4));
 
-        // 2. Menguji karakter duplikat
-        System.out.println("\n--- UJI DUPLIKAT ---");
+        // 2. Menguji duplikat
+        System.out.println("\n--- MENGUJI DUPLIKAT ---");
 
         manager.addCharacter(
-                new Character("Arjuna", CharacterType.HEALER, 1)
-        );
+                new Character("Arjuna", CharacterType.HEALER, 1));
 
-        // 3. Menampilkan total karakter
+        // 3. Menghitung jumlah karakter
         System.out.println("\nTotal karakter: "
                 + manager.getTotalCharacters());
 
         // 4. Mencari karakter
-        System.out.println("\n--- PENCARIAN ---");
+        System.out.println("\n--- MENCARI KARAKTER ---");
 
-        Character hasil = manager.findByName("Merlin");
+        Character ditemukan = manager.findByName("Merlin");
 
-        System.out.println(
-                hasil != null ? "Ditemukan: " + hasil
-                        : "Karakter tidak ditemukan"
-        );
+        if (ditemukan != null) {
+            System.out.println("Ditemukan: " + ditemukan);
+        }
 
-        Character tidakAda = manager.findByName("Zeus");
+        Character tidakDitemukan = manager.findByName("Zeus");
 
-        System.out.println(
-                tidakAda != null ? "Ditemukan: " + tidakAda
-                        : "Zeus tidak ditemukan (sesuai harapan)"
-        );
+        if (tidakDitemukan == null) {
+            System.out.println("Zeus tidak ditemukan.");
+        }
 
         // 5. Menghapus karakter
-        System.out.println("\n--- PENGHAPUSAN ---");
+        System.out.println("\n--- MENGHAPUS KARAKTER ---");
 
         manager.removeCharacter("Athena");
 
-        System.out.println("Total setelah hapus: "
+        System.out.println("Total karakter sekarang: "
                 + manager.getTotalCharacters());
 
-        // 6. Menampilkan karakter tersisa
+        // 6. Menampilkan karakter yang tersisa
         System.out.println("\n--- DAFTAR KARAKTER ---");
 
-        for (Character c : manager.getAllCharacters()) {
-            System.out.println(c);
+        for (Character character : manager.getAllCharacters()) {
+            System.out.println(character);
         }
 
-        // 7. Mini Challenge: rata-rata level
-        System.out.println("\n--- MINI CHALLENGE ---");
+        // 7. MINI CHALLENGE: Rata-rata level
+        System.out.println("\n--- MINI CHALLENGE 1 ---");
 
         System.out.println("Rata-rata level: "
                 + manager.getAverageLevel());
 
-        // 8. Mini Challenge: pencarian berdasarkan tipe
-        System.out.println("\nKarakter dengan tipe WARRIOR:");
+        // 8. MINI CHALLENGE: Mencari berdasarkan tipe
+        System.out.println("\n--- MINI CHALLENGE 2 ---");
 
-        for (Character c : manager.findByType(CharacterType.WARRIOR)) {
-            System.out.println(c);
+        ArrayList<Character> warriors =
+                manager.findByType(CharacterType.WARRIOR);
+
+        System.out.println("Daftar karakter WARRIOR:");
+
+        for (Character character : warriors) {
+            System.out.println(character);
         }
 
-        // 9. Eksperimen Object Reference
+        // 9. Eksperimen object reference
         System.out.println("\n--- EKSPERIMEN OBJECT REFERENCE ---");
 
         Character asli = manager.findByName("Arjuna");
-
         Character duplikatReferensi = asli;
-
-        System.out.println("Level Arjuna sebelum: "
-                + asli.getLevel());
 
         duplikatReferensi.setLevel(99);
 
-        System.out.println("Level Arjuna sesudah: "
+        System.out.println("Level Arjuna setelah perubahan: "
                 + asli.getLevel());
 
-        System.out.println("asli == duplikatReferensi? "
+        System.out.println("Apakah referensinya sama? "
                 + (asli == duplikatReferensi));
 
-        // 10. Menguji defensive copy
+        // 10. Eksperimen defensive copy
         System.out.println("\n--- EKSPERIMEN DEFENSIVE COPY ---");
 
-        java.util.ArrayList<Character> salinanList =
-                manager.getAllCharacters();
+        ArrayList<Character> salinan = manager.getAllCharacters();
 
-        salinanList.add(
-                new Character("Hantu", CharacterType.MAGE, 1)
-        );
+        salinan.add(
+                new Character("Hantu", CharacterType.HEALER, 2));
 
-        System.out.println("Total di manager asli: "
+        System.out.println("Jumlah karakter asli: "
                 + manager.getTotalCharacters());
 
-        System.out.println("Total di salinan list: "
-                + salinanList.size());
+        System.out.println("Jumlah karakter salinan: "
+                + salinan.size());
 
-        System.out.println("\n========================================");
+        System.out.println("\n====================================");
         System.out.println("       PROGRAM SELESAI");
-        System.out.println("========================================");
+        System.out.println("====================================");
     }
 }
