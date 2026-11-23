@@ -2,21 +2,29 @@
 package com.unpri.charactermanager.view;
 
 import com.unpri.charactermanager.model.Character;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.util.ArrayList;
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 
 public class MainWindow extends JFrame {
 
-    // MINI CHALLENGE: batas level karakter tinggi
     private static final int HIGH_LEVEL_THRESHOLD = 5;
 
     private final ArrayList<Character> characterList;
     private final double averageLevel;
 
-    public MainWindow(ArrayList<Character> characterList,
-                      double averageLevel) {
+    public MainWindow(
+            ArrayList<Character> characterList,
+            double averageLevel
+    ) {
 
         super("Character Manager v0.4");
 
@@ -25,35 +33,47 @@ public class MainWindow extends JFrame {
 
         initComponents();
 
-        setSize(760, 620);
-        setMinimumSize(new Dimension(600, 500));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setMinimumSize(new Dimension(650, 550));
+        pack();
         setLocationRelativeTo(null);
     }
 
     private void initComponents() {
 
-        JPanel mainPanel = new JPanel(new BorderLayout(0, 18));
+        JPanel mainPanel = new JPanel(
+                new BorderLayout(0, 18)
+        );
+
         mainPanel.setBackground(AppTheme.BG_MAIN);
-        mainPanel.setBorder(new EmptyBorder(22, 25, 22, 25));
+        mainPanel.setBorder(AppTheme.MAIN_BORDER);
+        mainPanel.setOpaque(true);
 
         // HEADER
         JPanel headerPanel = new JPanel();
+
         headerPanel.setLayout(
                 new BoxLayout(headerPanel, BoxLayout.Y_AXIS)
         );
-        headerPanel.setBackground(AppTheme.BG_MAIN);
-        headerPanel.setBorder(new EmptyBorder(10, 5, 12, 5));
 
-        JLabel titleLabel = new JLabel("CHARACTER MANAGER");
+        headerPanel.setBackground(AppTheme.BG_MAIN);
+        headerPanel.setOpaque(true);
+
+        JLabel titleLabel = new JLabel(
+                "CHARACTER MANAGER"
+        );
+
         titleLabel.setFont(AppTheme.FONT_TITLE);
         titleLabel.setForeground(AppTheme.GOLD);
+        titleLabel.setOpaque(false);
 
         JLabel subtitleLabel = new JLabel(
-                "Dashboard Data Karakter - Sprint #4"
+                "Dashboard Karakter - TP10 Sprint #4"
         );
-        subtitleLabel.setFont(AppTheme.FONT_BODY);
+
+        subtitleLabel.setFont(AppTheme.FONT_SUBTITLE);
         subtitleLabel.setForeground(AppTheme.TEXT_MAIN);
+        subtitleLabel.setOpaque(false);
 
         headerPanel.add(titleLabel);
         headerPanel.add(Box.createVerticalStrut(7));
@@ -61,68 +81,90 @@ public class MainWindow extends JFrame {
 
         // DAFTAR KARAKTER
         JPanel listPanel = new JPanel();
+
         listPanel.setLayout(
                 new BoxLayout(listPanel, BoxLayout.Y_AXIS)
         );
+
         listPanel.setBackground(AppTheme.BG_MAIN);
+        listPanel.setOpaque(true);
 
         JLabel listTitle = new JLabel(
                 "DAFTAR KARAKTER (" + characterList.size() + ")"
         );
-        listTitle.setFont(new Font("SansSerif", Font.BOLD, 17));
+
+        listTitle.setFont(AppTheme.FONT_CARD_TITLE);
         listTitle.setForeground(AppTheme.TEXT_LIGHT);
+        listTitle.setOpaque(false);
 
         listPanel.add(listTitle);
         listPanel.add(Box.createVerticalStrut(15));
 
         for (Character character : characterList) {
+
             listPanel.add(createCharacterCard(character));
-            listPanel.add(Box.createVerticalStrut(12));
+
+            listPanel.add(
+                    Box.createVerticalStrut(12)
+            );
         }
 
         JScrollPane scrollPane = new JScrollPane(listPanel);
-        scrollPane.setBorder(BorderFactory.createEmptyBorder());
+
+        scrollPane.setBorder(AppTheme.EMPTY_BORDER);
         scrollPane.setBackground(AppTheme.BG_MAIN);
         scrollPane.getViewport().setBackground(AppTheme.BG_MAIN);
+        scrollPane.setOpaque(true);
+        scrollPane.getViewport().setOpaque(true);
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 
         // STATISTIK
-        JPanel statisticsPanel = new JPanel(new BorderLayout());
-        statisticsPanel.setBackground(new Color(32, 32, 51));
-        statisticsPanel.setBorder(
-                BorderFactory.createCompoundBorder(
-                        BorderFactory.createLineBorder(
-                                new Color(65, 65, 85)
-                        ),
-                        new EmptyBorder(16, 18, 16, 18)
-                )
+        JPanel statisticsPanel = new JPanel(
+                new BorderLayout()
         );
+
+        statisticsPanel.setBackground(AppTheme.BG_CARD);
+        statisticsPanel.setBorder(AppTheme.STAT_BORDER);
+        statisticsPanel.setOpaque(true);
 
         JLabel statisticsLabel = new JLabel(
                 "RATA-RATA LEVEL     "
                 + String.format("%.2f", averageLevel)
         );
-        statisticsLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
+
+        statisticsLabel.setFont(AppTheme.FONT_STAT);
         statisticsLabel.setForeground(AppTheme.GOLD);
+        statisticsLabel.setOpaque(false);
 
         JLabel footerLabel = new JLabel(
                 "Statistik dihitung dari seluruh karakter"
         );
+
         footerLabel.setFont(AppTheme.FONT_BODY);
         footerLabel.setForeground(AppTheme.TEXT_MAIN);
+        footerLabel.setOpaque(false);
 
         JPanel statisticsContent = new JPanel();
+
         statisticsContent.setLayout(
-                new BoxLayout(statisticsContent, BoxLayout.Y_AXIS)
+                new BoxLayout(
+                        statisticsContent,
+                        BoxLayout.Y_AXIS
+                )
         );
+
         statisticsContent.setOpaque(false);
 
         statisticsContent.add(statisticsLabel);
         statisticsContent.add(Box.createVerticalStrut(6));
         statisticsContent.add(footerLabel);
 
-        statisticsPanel.add(statisticsContent, BorderLayout.CENTER);
+        statisticsPanel.add(
+                statisticsContent,
+                BorderLayout.CENTER
+        );
 
+        // SUSUNAN UTAMA
         mainPanel.add(headerPanel, BorderLayout.NORTH);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
         mainPanel.add(statisticsPanel, BorderLayout.SOUTH);
@@ -132,34 +174,34 @@ public class MainWindow extends JFrame {
 
     private JPanel createCharacterCard(Character character) {
 
-        JPanel card = new JPanel(new BorderLayout(12, 5));
-        card.setBackground(new Color(32, 32, 51));
+        JPanel card = new JPanel(
+                new BorderLayout(12, 5)
+        );
 
-        Color roleColor = AppTheme.colorFor(character.getType());
-
+        card.setBackground(AppTheme.BG_CARD);
         card.setBorder(
-                BorderFactory.createCompoundBorder(
-                        BorderFactory.createMatteBorder(
-                                0, 4, 0, 0, roleColor
-                        ),
-                        AppTheme.CARD_BORDER
-                )
+                AppTheme.cardBorder(character.getType())
+        );
+        card.setOpaque(true);
+
+        card.setPreferredSize(
+                new Dimension(650, 85)
         );
 
         card.setMaximumSize(
                 new Dimension(Integer.MAX_VALUE, 90)
         );
-        card.setPreferredSize(new Dimension(650, 80));
 
         // NAMA KARAKTER
-        JLabel nameLabel = new JLabel(character.getName());
+        JLabel nameLabel = new JLabel(
+                character.getName()
+        );
 
-        // Default: putih dan font biasa
         nameLabel.setFont(AppTheme.FONT_BODY);
         nameLabel.setForeground(AppTheme.TEXT_LIGHT);
+        nameLabel.setOpaque(false);
 
-        // MINI CHALLENGE AP13
-        // Level 5 ke atas: emas dan tebal
+        // MINI-CHALLENGE: LEVEL 5 KE ATAS
         if (character.getLevel() >= HIGH_LEVEL_THRESHOLD) {
 
             nameLabel.setForeground(AppTheme.GOLD);
@@ -167,27 +209,25 @@ public class MainWindow extends JFrame {
             nameLabel.setFont(
                     nameLabel.getFont().deriveFont(Font.BOLD)
             );
-
-            nameLabel.setToolTipText(
-                    "Karakter level tinggi!"
-            );
         }
 
         // TIPE KARAKTER
         JLabel typeLabel = new JLabel(
                 "Tipe: " + character.getType()
         );
-        typeLabel.setFont(AppTheme.FONT_BODY);
-        typeLabel.setForeground(roleColor);
 
-        typeLabel.setToolTipText(
-                AppTheme.describe(character.getType())
+        typeLabel.setFont(AppTheme.FONT_BODY);
+        typeLabel.setForeground(
+                AppTheme.colorFor(character.getType())
         );
+        typeLabel.setOpaque(false);
 
         JPanel leftPanel = new JPanel();
+
         leftPanel.setLayout(
                 new BoxLayout(leftPanel, BoxLayout.Y_AXIS)
         );
+
         leftPanel.setOpaque(false);
 
         leftPanel.add(nameLabel);
@@ -206,9 +246,29 @@ public class MainWindow extends JFrame {
 
         detailLabel.setFont(AppTheme.FONT_MONO);
         detailLabel.setForeground(AppTheme.TEXT_MAIN);
+        detailLabel.setHorizontalAlignment(
+                SwingConstants.RIGHT
+        );
+        detailLabel.setOpaque(false);
 
-        card.setToolTipText(
+        // PROPERTI TAMBAHAN 1: TOOLTIP
+        String detailTooltip =
+                character.getName()
+                + " | Level: " + character.getLevel()
+                + " | HP: " + character.getHitPoints()
+                + " | ATK: " + character.getAttackPower();
+
+        card.setToolTipText(detailTooltip);
+        nameLabel.setToolTipText(detailTooltip);
+        typeLabel.setToolTipText(
                 AppTheme.describe(character.getType())
+        );
+
+        // PROPERTI TAMBAHAN 2: AKSESIBILITAS
+        card.getAccessibleContext().setAccessibleDescription(
+                "Karakter " + character.getName()
+                + ", role " + character.getType()
+                + ", level " + character.getLevel()
         );
 
         card.add(leftPanel, BorderLayout.CENTER);

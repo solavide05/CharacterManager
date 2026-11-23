@@ -1,46 +1,55 @@
 
 import com.unpri.charactermanager.model.Character;
-import com.unpri.charactermanager.model.CharacterManager;
 import com.unpri.charactermanager.model.CharacterType;
 import com.unpri.charactermanager.view.MainWindow;
+import java.util.ArrayList;
 import javax.swing.SwingUtilities;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        CharacterManager manager = new CharacterManager();
+        ArrayList<Character> characters = new ArrayList<>();
 
-        manager.addCharacter(
+        characters.add(
                 new Character("Arjuna", CharacterType.WARRIOR, 5)
         );
 
-        manager.addCharacter(
-                new Character("Merlin", CharacterType.MAGE, 3)
+        characters.add(
+                new Character("Merlin", CharacterType.MAGE, 6)
         );
 
-        manager.addCharacter(
+        characters.add(
                 new Character("Athena", CharacterType.ARCHER, 4)
         );
 
-        manager.addCharacter(
-                new Character("Bragi", CharacterType.HEALER, 6)
+        characters.add(
+                new Character("Gatotkaca", CharacterType.WARRIOR, 8)
         );
 
-        manager.addCharacter(
-                new Character("Leonidas", CharacterType.WARRIOR, 8)
+        characters.add(
+                new Character("Morgana", CharacterType.MAGE, 5)
         );
 
-        // Karakter tambahan untuk pengujian statistik
-        manager.addCharacter(
-                new Character("Kirana", CharacterType.MAGE, 10)
+        characters.add(
+                new Character("Robin", CharacterType.ARCHER, 8)
         );
 
-        double averageLevel = manager.getAverageLevel();
+        // Menghitung rata-rata level
+        double totalLevel = 0;
 
+        for (Character character : characters) {
+            totalLevel += character.getLevel();
+        }
+
+        double averageLevel =
+                totalLevel / characters.size();
+
+        // Menampilkan aplikasi
         SwingUtilities.invokeLater(() -> {
+
             MainWindow window = new MainWindow(
-                    manager.getAllCharacters(),
+                    characters,
                     averageLevel
             );
 
