@@ -9,6 +9,7 @@ public class Main {
 
     public static void main(String[] args) {
 
+        // 1. Menyiapkan data karakter
         CharacterManager manager = new CharacterManager();
 
         manager.addCharacter(
@@ -23,10 +24,15 @@ public class Main {
             new Character("Athena", CharacterType.ARCHER, 4)
         );
 
+        // 2. Mengambil statistik dari Model
+        double averageLevel = manager.getAverageLevel();
+
+        // 3. Menjalankan GUI di Event Dispatch Thread
         SwingUtilities.invokeLater(() -> {
 
             MainWindow window = new MainWindow(
-                manager.getAllCharacters()
+                manager.getAllCharacters(),
+                averageLevel
             );
 
             window.setVisible(true);

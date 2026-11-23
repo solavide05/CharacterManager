@@ -1,23 +1,26 @@
 
 package com.unpri.charactermanager.view;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import java.util.ArrayList;
-
 import com.unpri.charactermanager.model.Character;
+import java.util.ArrayList;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class MainWindow extends JFrame {
 
     private JPanel mainPanel;
-    private ArrayList<Character> characterList;
+    private final ArrayList<Character> characterList;
+    private final double averageLevel;
 
-    public MainWindow(ArrayList<Character> characterList) {
+    public MainWindow(
+            ArrayList<Character> characterList,
+            double averageLevel) {
 
         super("Character Manager v0.3");
 
         this.characterList = characterList;
+        this.averageLevel = averageLevel;
 
         initComponents();
 
@@ -30,12 +33,14 @@ public class MainWindow extends JFrame {
 
         mainPanel = new JPanel();
 
+        // Judul daftar karakter
         JLabel titleLabel = new JLabel(
             "=== Daftar Karakter (" + characterList.size() + ") ==="
         );
 
         mainPanel.add(titleLabel);
 
+        // Menampilkan setiap karakter
         for (Character c : characterList) {
 
             String info = c.getName()
@@ -49,6 +54,15 @@ public class MainWindow extends JFrame {
             mainPanel.add(characterLabel);
         }
 
+        // Statistik rata-rata level
+        JLabel averageLabel = new JLabel(
+            "Rata-rata Level: "
+            + String.format("%.1f", averageLevel)
+        );
+
+        mainPanel.add(averageLabel);
+
+        // Memasukkan panel ke JFrame
         add(mainPanel);
     }
 }
