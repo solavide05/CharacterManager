@@ -9,6 +9,9 @@ import javax.swing.border.EmptyBorder;
 
 public class MainWindow extends JFrame {
 
+    // MINI CHALLENGE: batas level karakter tinggi
+    private static final int HIGH_LEVEL_THRESHOLD = 5;
+
     private final ArrayList<Character> characterList;
     private final double averageLevel;
 
@@ -150,8 +153,25 @@ public class MainWindow extends JFrame {
 
         // NAMA KARAKTER
         JLabel nameLabel = new JLabel(character.getName());
-        nameLabel.setFont(new Font("SansSerif", Font.BOLD, 17));
+
+        // Default: putih dan font biasa
+        nameLabel.setFont(AppTheme.FONT_BODY);
         nameLabel.setForeground(AppTheme.TEXT_LIGHT);
+
+        // MINI CHALLENGE AP13
+        // Level 5 ke atas: emas dan tebal
+        if (character.getLevel() >= HIGH_LEVEL_THRESHOLD) {
+
+            nameLabel.setForeground(AppTheme.GOLD);
+
+            nameLabel.setFont(
+                    nameLabel.getFont().deriveFont(Font.BOLD)
+            );
+
+            nameLabel.setToolTipText(
+                    "Karakter level tinggi!"
+            );
+        }
 
         // TIPE KARAKTER
         JLabel typeLabel = new JLabel(
@@ -186,15 +206,6 @@ public class MainWindow extends JFrame {
 
         detailLabel.setFont(AppTheme.FONT_MONO);
         detailLabel.setForeground(AppTheme.TEXT_MAIN);
-
-        // MINI CHALLENGE: LEVEL 7 KE ATAS
-        if (character.getLevel() >= 7) {
-            nameLabel.setForeground(AppTheme.GOLD);
-            nameLabel.setFont(
-                    new Font("SansSerif", Font.BOLD, 19)
-            );
-            nameLabel.setToolTipText("Karakter level tinggi!");
-        }
 
         card.setToolTipText(
                 AppTheme.describe(character.getType())
