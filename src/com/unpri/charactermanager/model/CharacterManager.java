@@ -19,15 +19,19 @@ public class CharacterManager {
         }
 
         if (findByName(character.getName()) != null) {
-            System.out.println("Karakter " + character.getName()
-                    + " sudah ada. Penambahan ditolak.");
+            System.out.println(
+                    "Karakter " + character.getName()
+                    + " sudah ada. Penambahan ditolak."
+            );
             return false;
         }
 
         characterList.add(character);
 
-        System.out.println("Karakter " + character.getName()
-                + " berhasil ditambahkan.");
+        System.out.println(
+                "Karakter " + character.getName()
+                + " berhasil ditambahkan."
+        );
 
         return true;
     }
@@ -54,23 +58,27 @@ public class CharacterManager {
         Character character = findByName(name);
 
         if (character == null) {
-            System.out.println("Karakter " + name + " tidak ditemukan.");
+            System.out.println(
+                    "Karakter " + name + " tidak ditemukan."
+            );
             return false;
         }
 
         characterList.remove(character);
 
-        System.out.println("Karakter " + name + " berhasil dihapus.");
+        System.out.println(
+                "Karakter " + name + " berhasil dihapus."
+        );
 
         return true;
     }
 
-    // Menghitung jumlah karakter dalam daftar
+    // Menghitung jumlah karakter
     public int getTotalCharacters() {
         return characterList.size();
     }
 
-    // Mengembalikan salinan daftar, bukan daftar asli
+    // Mengembalikan salinan daftar karakter
     public ArrayList<Character> getAllCharacters() {
         return new ArrayList<>(characterList);
     }
@@ -79,7 +87,7 @@ public class CharacterManager {
     public double getAverageLevel() {
 
         if (characterList.isEmpty()) {
-            return 0;
+            return 0.0;
         }
 
         int totalLevel = 0;
@@ -109,11 +117,7 @@ public class CharacterManager {
         return result;
     }
 
-    /**
-     * Mencari karakter dengan attack power tertinggi.
-     *
-     * @return karakter terkuat atau null jika daftar kosong
-     */
+    // Mencari karakter dengan attack power tertinggi
     public Character findStrongest() {
 
         if (characterList.isEmpty()) {
@@ -123,6 +127,7 @@ public class CharacterManager {
         Character strongest = characterList.get(0);
 
         for (Character character : characterList) {
+
             if (character.getAttackPower()
                     > strongest.getAttackPower()) {
                 strongest = character;

@@ -1,147 +1,109 @@
-# Character Manager – TP5
+# TP8 - Character Manager Sprint #3
 
-## Character Manager Sprint #2
+## MainWindow, Data Dinamis & Analisis MVC
 
-### CharacterManager, Analytics & Object Reference
-
----
-
-## Identitas Mahasiswa
-
-| Keterangan | Informasi |
-| :--- | :--- |
-| Nama | Sola Vide Br Surbakti |
-| NIM | 253303621205 |
-| Program Studi | Sistem Informasi |
-| Universitas | Universitas Prima Indonesia |
-| Mata Kuliah | Java Visual |
-| Tugas | TP05 – AP6 Belajar Praktik |
+**Mata Kuliah:** Java Visual (SIH-6406)  
+**Tugas:** TP8 - Tugas  
+**Nama:** Sola Vide Br Surbakti  
+**NIM:** 253303621205  
+**Program Studi:** Sistem Informasi  
+**Universitas:** Universitas Prima Indonesia (UNPRI)
 
 ---
 
-## 1. Deskripsi Proyek
+## A. Implementasi MainWindow
 
-Character Manager merupakan aplikasi berbasis Java yang digunakan untuk mengelola data karakter. Pada TP5, proyek ini dikembangkan dengan menambahkan fitur pengelolaan karakter, analisis data, serta pengujian konsep *object reference* dan *defensive copy*.
+Pada TP8 ini, aplikasi Character Manager dikembangkan dari program berbasis console menjadi aplikasi berbasis Graphical User Interface (GUI) menggunakan Java Swing.
 
-Proyek ini menerapkan konsep Object-Oriented Programming (OOP), seperti class, object, encapsulation, constructor, method, static variable, dan method overriding.
+Class `MainWindow` dibuat dengan menggunakan `JFrame` sebagai jendela utama aplikasi. Data karakter ditampilkan secara dinamis menggunakan perulangan `for`, sehingga setiap karakter yang tersimpan di dalam `CharacterManager` dapat ditampilkan tanpa membuat `JLabel` satu per satu secara manual.
 
-## 2. Fitur yang Dikembangkan
+Tampilan aplikasi terdiri dari:
 
-### A. Core Features
+- Header Character Manager.
+- Daftar karakter dalam bentuk kartu.
+- Informasi nama, tipe, level, HP, dan attack power.
+- Panel statistik rata-rata level.
+- Scroll pane untuk memudahkan pengguna melihat daftar karakter.
 
-- `addCharacter()` – Menambahkan karakter baru.
-- `findByName()` – Mencari karakter berdasarkan nama.
-- `removeCharacter()` – Menghapus karakter.
-- `getTotalCharacters()` – Menghitung jumlah karakter.
-- `getAllCharacters()` – Mengambil daftar karakter menggunakan defensive copy.
-- `equals()` – Membandingkan karakter berdasarkan nama.
-- Validasi untuk mencegah penambahan karakter dengan nama yang sama.
+## B. Data Karakter dan Mini-Challenge
 
-### B. Mini Challenge
+Pada tugas ini terdapat enam karakter yang digunakan untuk menguji tampilan dinamis dan perhitungan statistik.
 
-- `getAverageLevel()` – Menghitung rata-rata level seluruh karakter.
-- `findByType()` – Mencari karakter berdasarkan jenis karakter.
-- Mengembalikan nilai `0` apabila daftar karakter kosong saat menghitung rata-rata.
+**Daftar karakter:**
 
-### C. Fitur Analitik Tambahan
+1. **Arjuna** - WARRIOR, Level 5.
+2. **Merlin** - MAGE, Level 3.
+3. **Athena** - ARCHER, Level 4.
+4. **Bragi** - HEALER, Level 6.
+5. **Leonidas** - WARRIOR, Level 8.
+6. **Kirana** - MAGE, Level 10.
 
-#### Method `findStrongest()`
+### Alasan Pemilihan Karakter
 
-Fitur tambahan yang dibuat adalah `findStrongest()`, yaitu method untuk mencari karakter dengan nilai `attackPower` paling tinggi.
+1. **Bragi - HEALER, Level 6:** Dipilih sebagai karakter pendukung yang memiliki peran membantu karakter lain.
+2. **Leonidas - WARRIOR, Level 8:** Dipilih sebagai karakter petarung dengan level yang lebih tinggi.
+3. **Kirana - MAGE, Level 10:** Dipilih untuk menguji perubahan jumlah karakter dan memastikan statistik rata-rata level ikut berubah.
 
-Fitur ini membantu pengguna mengetahui karakter yang memiliki kekuatan serangan terbesar tanpa harus membandingkan seluruh karakter secara manual.
+### Hasil Mini-Challenge
 
-## 3. Struktur Folder
+Mini-Challenge dilakukan dengan menambahkan `JLabel` yang menampilkan rata-rata level seluruh karakter.
 
-```text
-CharacterManager/
-│
-├── src/
-│   ├── Main.java
-│   │
-│   └── com/
-│       └── unpri/
-│           └── charactermanager/
-│               └── model/
-│                   ├── Character.java
-│                   ├── CharacterManager.java
-│                   └── CharacterType.java
-│
-├── screenshots/
-│   ├── TP5_Bagian_A_Core.png
-│   ├── TP5_Bagian_B_C_Analitik.png
-│   └── TP5_Bagian_D_Reference.png
-│
-└── README.md
-```
+**Sebelum perubahan data:**
 
-## 4. Hasil Pengujian Program
+- Jumlah karakter: 5.
+- Total level: 26.
+- Rata-rata level: **5,2**.
 
-Program telah diuji dengan beberapa pengujian berikut:
+**Sesudah perubahan data:**
 
-| Pengujian | Hasil |
-| :--- | :--- |
-| Menambahkan karakter | Berhasil |
-| Membandingkan karakter dengan `equals()` | Berhasil |
-| Menolak karakter duplikat | Berhasil |
-| Mencari karakter | Berhasil |
-| Menghapus karakter | Berhasil |
-| Menghitung jumlah karakter | Berhasil |
-| Menghitung rata-rata level | 6.5 |
-| Mencari karakter berdasarkan tipe | Arjuna – WARRIOR |
-| Mencari karakter terkuat | Merlin |
-| Menguji object reference | Berhasil |
-| Menguji defensive copy | Berhasil |
-| Menguji static counter | 6 objek |
+- Jumlah karakter: 6.
+- Total level: 36.
+- Rata-rata level: **6,0**.
 
-## 5. Dokumentasi Screenshot
+Perubahan tersebut membuktikan bahwa penambahan data karakter memengaruhi hasil perhitungan rata-rata level secara otomatis.
 
-### A. Pengujian Core Features
+### Screenshot Aplikasi
 
-Screenshot berikut menunjukkan proses penambahan karakter, pengujian `equals()`, penolakan karakter duplikat, pencarian karakter, dan penghapusan karakter.
+#### 1. Sebelum Perubahan Data
 
-![Pengujian Core Features](screenshots/TP5_Bagian_A_Core.png)
+![Screenshot Sebelum Perubahan](screenshots/TP8-sebelum.png)
 
-### B. Pengujian Mini Challenge dan Fitur Analitik
+*Keterangan: Tampilan aplikasi dengan lima karakter dan statistik rata-rata level sebesar 5,2.*
 
-Screenshot berikut menunjukkan hasil perhitungan rata-rata level, pencarian karakter berdasarkan tipe, serta pencarian karakter dengan `attackPower` tertinggi.
+#### 2. Sesudah Perubahan Data
 
-![Pengujian Mini Challenge dan Analitik](screenshots/TP5_Bagian_B_C_Analitik.png)
+![Screenshot Sesudah Perubahan](screenshots/TP8-sesudah.png)
 
-### C. Pengujian Object Reference dan Defensive Copy
+*Keterangan: Tampilan aplikasi dengan enam karakter dan statistik rata-rata level sebesar 6,0.*
 
-Screenshot berikut menunjukkan bahwa variabel `a` dan `b` mengarah ke objek yang sama, serta pengujian defensive copy untuk memastikan perubahan pada daftar salinan tidak mengubah struktur daftar asli.
+## C. Alur Data dan Konsep MVC
 
-![Pengujian Object Reference dan Defensive Copy](screenshots/TP5_Bagian_D_Reference.png)
+Alur data aplikasi dimulai dari `Main.java` yang membuat objek `CharacterManager` dan memasukkan data karakter ke dalamnya. Selanjutnya, `CharacterManager` sebagai bagian dari Model bertugas menyimpan, mengelola, dan menghitung rata-rata level karakter. Data karakter dan hasil perhitungan kemudian diberikan kepada `MainWindow` untuk ditampilkan dalam bentuk GUI menggunakan Java Swing. `MainWindow` berperan sebagai View yang bertanggung jawab menampilkan informasi kepada pengguna tanpa mengambil alih proses pengolahan data. Pemisahan tersebut membuat kode lebih terstruktur dan memudahkan pengembangan aplikasi.
 
-## 6. Kesimpulan
+## D. Teknologi yang Digunakan
 
-Berdasarkan pengerjaan TP5, saya memahami cara mengelola objek menggunakan class `CharacterManager`, membandingkan objek menggunakan method `equals()`, serta mencegah penambahan data karakter yang memiliki nama sama.
+- Java
+- Java Swing
+- JFrame
+- JPanel
+- JLabel
+- JScrollPane
+- ArrayList
+- Object-Oriented Programming (OOP)
+- Model-View-Controller (MVC)
+- Visual Studio Code
+- Git dan GitHub
 
-Saya juga mempelajari cara menggunakan method analitik untuk mengolah data karakter. Selain itu, pengujian object reference membantu memahami bahwa dua variabel dapat mengarah ke objek yang sama. Penggunaan defensive copy diperlukan agar struktur daftar karakter asli tidak dapat diubah secara langsung melalui daftar salinan.
+## E. Analisis GUI dan MVC
 
-Fitur tambahan `findStrongest()` menjadi pengembangan dari proyek sebelumnya karena dapat menemukan karakter dengan `attackPower` tertinggi secara otomatis.
-
-## 7. Google Docs – Analisis TP5
-
-Dokumen analisis TP5 berisi pembahasan mengenai:
-
-- Object reference.
-- Perbedaan primitive dan reference.
-- Penggunaan static counter.
-- Method `equals()`.
-- Defensive copy.
+Analisis lengkap mengenai program sekuensial, event-driven programming, penggunaan `SwingUtilities.invokeLater()`, hubungan is-a dan has-a, serta penerapan prinsip MVC pada aplikasi Character Manager dapat dilihat melalui dokumen Google Docs berikut.
 
 **Link Google Docs:**
 
-[Dokumen Analisis TP5 – Character Manager](https://docs.google.com/document/d/1cdo0tnjrpkbUI52BbNE1XgNCcUMHNexPDGNg50KFeNY/edit?usp=sharing)
+[Dokumen Analisis TP8](https://docs.google.com/document/d/1js4johKPmK9MTUgNVO4QXRLkxV4ZnB-BO_gw-gl5GPw/edit?usp=sharing)
 
 ---
 
-## Repository GitHub
-
-[https://github.com/solavide05/CharacterManager](https://github.com/solavide05/CharacterManager)
-
-**Branch:** `TP5-CharacterManager-Sprint-2`
-
-**Tugas:** TP05 – Character Manager Sprint #2
+**TP8 - Character Manager Sprint #3**  
+Universitas Prima Indonesia (UNPRI)  
+Program Studi Sistem Informasi
