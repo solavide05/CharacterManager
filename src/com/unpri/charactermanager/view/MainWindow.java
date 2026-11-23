@@ -12,14 +12,10 @@ public class MainWindow extends JFrame {
     private final ArrayList<Character> characterList;
     private final double averageLevel;
 
-    private final Color backgroundColor = new Color(245, 247, 250);
-    private final Color primaryColor = new Color(35, 55, 85);
-    private final Color accentColor = new Color(52, 120, 190);
-
     public MainWindow(ArrayList<Character> characterList,
                       double averageLevel) {
 
-        super("Character Manager | TP8 Sprint #3");
+        super("Character Manager v0.4");
 
         this.characterList = characterList;
         this.averageLevel = averageLevel;
@@ -35,7 +31,7 @@ public class MainWindow extends JFrame {
     private void initComponents() {
 
         JPanel mainPanel = new JPanel(new BorderLayout(0, 18));
-        mainPanel.setBackground(backgroundColor);
+        mainPanel.setBackground(AppTheme.BG_MAIN);
         mainPanel.setBorder(new EmptyBorder(22, 25, 22, 25));
 
         // HEADER
@@ -43,18 +39,18 @@ public class MainWindow extends JFrame {
         headerPanel.setLayout(
                 new BoxLayout(headerPanel, BoxLayout.Y_AXIS)
         );
-        headerPanel.setBackground(primaryColor);
-        headerPanel.setBorder(new EmptyBorder(20, 22, 20, 22));
+        headerPanel.setBackground(AppTheme.BG_MAIN);
+        headerPanel.setBorder(new EmptyBorder(10, 5, 12, 5));
 
         JLabel titleLabel = new JLabel("CHARACTER MANAGER");
-        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
-        titleLabel.setForeground(Color.WHITE);
+        titleLabel.setFont(AppTheme.FONT_TITLE);
+        titleLabel.setForeground(AppTheme.GOLD);
 
         JLabel subtitleLabel = new JLabel(
-                "Dashboard Data Karakter - TP8 Sprint #3"
+                "Dashboard Data Karakter - Sprint #4"
         );
-        subtitleLabel.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        subtitleLabel.setForeground(new Color(220, 230, 245));
+        subtitleLabel.setFont(AppTheme.FONT_BODY);
+        subtitleLabel.setForeground(AppTheme.TEXT_MAIN);
 
         headerPanel.add(titleLabel);
         headerPanel.add(Box.createVerticalStrut(7));
@@ -65,35 +61,35 @@ public class MainWindow extends JFrame {
         listPanel.setLayout(
                 new BoxLayout(listPanel, BoxLayout.Y_AXIS)
         );
-        listPanel.setBackground(backgroundColor);
+        listPanel.setBackground(AppTheme.BG_MAIN);
 
         JLabel listTitle = new JLabel(
                 "DAFTAR KARAKTER (" + characterList.size() + ")"
         );
-        listTitle.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        listTitle.setForeground(primaryColor);
+        listTitle.setFont(new Font("SansSerif", Font.BOLD, 17));
+        listTitle.setForeground(AppTheme.TEXT_LIGHT);
 
         listPanel.add(listTitle);
-        listPanel.add(Box.createVerticalStrut(12));
+        listPanel.add(Box.createVerticalStrut(15));
 
-        // Menampilkan karakter secara dinamis
         for (Character character : characterList) {
             listPanel.add(createCharacterCard(character));
-            listPanel.add(Box.createVerticalStrut(10));
+            listPanel.add(Box.createVerticalStrut(12));
         }
 
         JScrollPane scrollPane = new JScrollPane(listPanel);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
-        scrollPane.getViewport().setBackground(backgroundColor);
+        scrollPane.setBackground(AppTheme.BG_MAIN);
+        scrollPane.getViewport().setBackground(AppTheme.BG_MAIN);
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 
         // STATISTIK
         JPanel statisticsPanel = new JPanel(new BorderLayout());
-        statisticsPanel.setBackground(new Color(225, 239, 252));
+        statisticsPanel.setBackground(new Color(32, 32, 51));
         statisticsPanel.setBorder(
                 BorderFactory.createCompoundBorder(
                         BorderFactory.createLineBorder(
-                                new Color(190, 215, 240)
+                                new Color(65, 65, 85)
                         ),
                         new EmptyBorder(16, 18, 16, 18)
                 )
@@ -101,20 +97,16 @@ public class MainWindow extends JFrame {
 
         JLabel statisticsLabel = new JLabel(
                 "RATA-RATA LEVEL     "
-                + String.format("%.1f", averageLevel)
+                + String.format("%.2f", averageLevel)
         );
-        statisticsLabel.setFont(
-                new Font("Segoe UI", Font.BOLD, 18)
-        );
-        statisticsLabel.setForeground(primaryColor);
+        statisticsLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
+        statisticsLabel.setForeground(AppTheme.GOLD);
 
         JLabel footerLabel = new JLabel(
                 "Statistik dihitung dari seluruh karakter"
         );
-        footerLabel.setFont(
-                new Font("Segoe UI", Font.PLAIN, 12)
-        );
-        footerLabel.setForeground(new Color(90, 105, 125));
+        footerLabel.setFont(AppTheme.FONT_BODY);
+        footerLabel.setForeground(AppTheme.TEXT_MAIN);
 
         JPanel statisticsContent = new JPanel();
         statisticsContent.setLayout(
@@ -123,7 +115,7 @@ public class MainWindow extends JFrame {
         statisticsContent.setOpaque(false);
 
         statisticsContent.add(statisticsLabel);
-        statisticsContent.add(Box.createVerticalStrut(5));
+        statisticsContent.add(Box.createVerticalStrut(6));
         statisticsContent.add(footerLabel);
 
         statisticsPanel.add(statisticsContent, BorderLayout.CENTER);
@@ -138,34 +130,39 @@ public class MainWindow extends JFrame {
     private JPanel createCharacterCard(Character character) {
 
         JPanel card = new JPanel(new BorderLayout(12, 5));
-        card.setBackground(Color.WHITE);
+        card.setBackground(new Color(32, 32, 51));
+
+        Color roleColor = AppTheme.colorFor(character.getType());
 
         card.setBorder(
                 BorderFactory.createCompoundBorder(
-                        BorderFactory.createLineBorder(
-                                new Color(220, 226, 235)
+                        BorderFactory.createMatteBorder(
+                                0, 4, 0, 0, roleColor
                         ),
-                        new EmptyBorder(13, 16, 13, 16)
+                        AppTheme.CARD_BORDER
                 )
         );
 
         card.setMaximumSize(
                 new Dimension(Integer.MAX_VALUE, 90)
         );
+        card.setPreferredSize(new Dimension(650, 80));
 
+        // NAMA KARAKTER
         JLabel nameLabel = new JLabel(character.getName());
-        nameLabel.setFont(
-                new Font("Segoe UI", Font.BOLD, 16)
-        );
-        nameLabel.setForeground(primaryColor);
+        nameLabel.setFont(new Font("SansSerif", Font.BOLD, 17));
+        nameLabel.setForeground(AppTheme.TEXT_LIGHT);
 
+        // TIPE KARAKTER
         JLabel typeLabel = new JLabel(
                 "Tipe: " + character.getType()
         );
-        typeLabel.setFont(
-                new Font("Segoe UI", Font.PLAIN, 12)
+        typeLabel.setFont(AppTheme.FONT_BODY);
+        typeLabel.setForeground(roleColor);
+
+        typeLabel.setToolTipText(
+                AppTheme.describe(character.getType())
         );
-        typeLabel.setForeground(accentColor);
 
         JPanel leftPanel = new JPanel();
         leftPanel.setLayout(
@@ -177,6 +174,7 @@ public class MainWindow extends JFrame {
         leftPanel.add(Box.createVerticalStrut(5));
         leftPanel.add(typeLabel);
 
+        // DETAIL KARAKTER
         JLabel detailLabel = new JLabel(
                 "<html><div style='text-align:right;'>"
                 + "LEVEL " + character.getLevel()
@@ -186,10 +184,21 @@ public class MainWindow extends JFrame {
                 + "</div></html>"
         );
 
-        detailLabel.setFont(
-                new Font("Segoe UI", Font.PLAIN, 12)
+        detailLabel.setFont(AppTheme.FONT_MONO);
+        detailLabel.setForeground(AppTheme.TEXT_MAIN);
+
+        // MINI CHALLENGE: LEVEL 7 KE ATAS
+        if (character.getLevel() >= 7) {
+            nameLabel.setForeground(AppTheme.GOLD);
+            nameLabel.setFont(
+                    new Font("SansSerif", Font.BOLD, 19)
+            );
+            nameLabel.setToolTipText("Karakter level tinggi!");
+        }
+
+        card.setToolTipText(
+                AppTheme.describe(character.getType())
         );
-        detailLabel.setForeground(new Color(65, 75, 90));
 
         card.add(leftPanel, BorderLayout.CENTER);
         card.add(detailLabel, BorderLayout.EAST);
