@@ -1,12 +1,15 @@
 
 package com.unpri.charactermanager.view;
 
+import com.unpri.charactermanager.model.Character;
+import com.unpri.charactermanager.model.CharacterManager;
+import com.unpri.charactermanager.model.CharacterType;
 import java.awt.BorderLayout;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.text.ParseException;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -18,220 +21,345 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.Border;
 
-import com.unpri.charactermanager.model.Character;
-import com.unpri.charactermanager.model.CharacterManager;
-import com.unpri.charactermanager.model.CharacterType;
-
 public class CharacterFormPanel extends JPanel {
 
     private final CharacterManager manager;
-    private final Runnable onAdded;
 
-    private final JTextField nameField = new JTextField(14);
+    private final JTextField txtName;
+    private final JComboBox<CharacterType> cmbRole;
+    private final JSpinner spnLevel;
 
-    private final JComboBox<CharacterType> roleBox =
-            new JComboBox<>(CharacterType.values());
+    private final JButton btnSave;
+    private final JLabel lblMessage;
 
-    private final JSpinner levelSpinner =
-            new JSpinner(new SpinnerNumberModel(1, 1, 99, 1));
+    private final Border originalNameBorder;
+    private final Border originalRoleBorder;
+    private final Border originalLevelBorder;
 
-    private final JLabel messageLabel = new JLabel(" ");
-
-    private final Border nameBorder;
-    private final Border levelBorder;
+    private final Runnable onCharacterAdded;
 
     public CharacterFormPanel(
             CharacterManager manager,
-            Runnable onAdded) {
+            Runnable onCharacterAdded
+    ) {
 
         this.manager = manager;
-        this.onAdded = onAdded;
+        this.onCharacterAdded = onCharacterAdded;
 
-        nameBorder = nameField.getBorder();
-        levelBorder = levelSpinner.getBorder();
-
-        setLayout(new BorderLayout());
-        setBackground(AppTheme.BG_MAIN);
+        setLayout(new BorderLayout(10, 10));
+        setBackground(AppTheme.PANEL);
 
         setBorder(
-                BorderFactory.createEmptyBorder(8, 16, 8, 8)
-        );
-
-        setPreferredSize(new Dimension(250, 0));
-
-        JLabel title = new JLabel("Tambah Karakter");
-
-        title.setFont(
-                AppTheme.FONT_BODY.deriveFont(
-                        java.awt.Font.BOLD, 16f
+                BorderFactory.createCompoundBorder(
+                        BorderFactory.createLineBorder(
+                                new Color(71, 85, 105)
+                        ),
+                        BorderFactory.createEmptyBorder(
+                                18, 20, 18, 20
+                        )
                 )
         );
 
-        title.setForeground(AppTheme.TEXT_MAIN);
+        // INPUT NAMA
+        txtName = new JTextField(20);
+        AppTheme.styleTextField(txtName);
 
-        messageLabel.setFont(AppTheme.FONT_BODY);
+        // INPUT ROLE
+        cmbRole = new JComboBox<>(CharacterType.values());
+        cmbRole.setFont(AppTheme.font(14, false));
+        cmbRole.setBackground(AppTheme.CARD);
+        cmbRole.setForeground(AppTheme.TEXT);
 
-        JButton saveButton = new JButton("Simpan");
-
-        saveButton.setCursor(
-                Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)
+        // INPUT LEVEL
+        spnLevel = new JSpinner(
+                new SpinnerNumberModel(1, 1, 99, 1)
         );
 
-        saveButton.addActionListener(e -> onSave());
+        spnLevel.setFont(AppTheme.font(14, false));
 
-        nameField.addActionListener(e -> onSave());
+        // SIMPAN BORDER ASLI
+        originalNameBorder = txtName.getBorder();
+        originalRoleBorder = cmbRole.getBorder();
+        originalLevelBorder = spnLevel.getBorder();
 
-        JPanel rows = new JPanel(
-                new GridLayout(0, 1, 0, 4)
+        // TOMBOL SIMPAN
+        btnSave = new JButton("Tambah Karakter");
+
+        AppTheme.styleButton(
+                btnSave,
+                AppTheme.PRIMARY
         );
 
-        rows.setOpaque(false);
+        // PESAN VALIDASI
+        lblMessage = new JLabel(" ");
+        lblMessage.setFont(AppTheme.font(12, true));
+        lblMessage.setForeground(AppTheme.DANGER);
 
-        rows.add(title);
+        buildForm();
 
-        rows.add(makeLabel("Nama:", nameField));
-        rows.add(nameField);
-
-        rows.add(makeLabel("Role:", roleBox));
-        rows.add(roleBox);
-
-        rows.add(makeLabel("Level:", levelSpinner));
-        rows.add(levelSpinner);
-
-        rows.add(messageLabel);
-        rows.add(saveButton);
-
-        add(rows, BorderLayout.NORTH);
+        btnSave.addActionListener(e -> onSave());
     }
 
-    private JLabel makeLabel(
-            String text,
-            JComponent target) {
+    // MEMBANGUN FORM
+    private void buildForm() {
+
+        JLabel title = new JLabel("Tambah Karakter Baru");
+
+        title.setFont(AppTheme.font(19, true));
+        title.setForeground(AppTheme.TEXT);
+
+        JPanel header = new JPanel(new BorderLayout());
+        header.setBackground(AppTheme.PANEL);
+        header.add(title, BorderLayout.WEST);
+
+        JPanel fields = new JPanel(new GridBagLayout());
+        fields.setBackground(AppTheme.PANEL);
+
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        gbc.insets = new Insets(8, 5, 8, 12);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        // NAMA
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 0;
+
+        fields.add(createLabel("Nama Karakter"), gbc);
+
+        gbc.gridx = 1;
+        gbc.weightx = 1;
+
+        fields.add(txtName, gbc);
+
+        // ROLE
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.weightx = 0;
+
+        fields.add(createLabel("Role Karakter"), gbc);
+
+        gbc.gridx = 1;
+        gbc.weightx = 1;
+
+        fields.add(cmbRole, gbc);
+
+        // LEVEL
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.weightx = 0;
+
+        fields.add(createLabel("Level"), gbc);
+
+        gbc.gridx = 1;
+        gbc.weightx = 1;
+
+        fields.add(spnLevel, gbc);
+
+        // BAGIAN BAWAH
+        JPanel bottom = new JPanel(new BorderLayout(10, 10));
+        bottom.setBackground(AppTheme.PANEL);
+
+        bottom.add(lblMessage, BorderLayout.CENTER);
+        bottom.add(btnSave, BorderLayout.EAST);
+
+        add(header, BorderLayout.NORTH);
+        add(fields, BorderLayout.CENTER);
+        add(bottom, BorderLayout.SOUTH);
+    }
+
+    // MEMBUAT LABEL
+    private JLabel createLabel(String text) {
 
         JLabel label = new JLabel(text);
 
-        label.setFont(AppTheme.FONT_BODY);
-        label.setForeground(AppTheme.TEXT_MAIN);
-        label.setLabelFor(target);
+        label.setFont(AppTheme.font(13, true));
+        label.setForeground(AppTheme.TEXT);
 
         return label;
     }
 
-    private void onSave() {
-
-        clearMessage();
-
-        String name = nameField.getText().trim();
-
-        String problem = validateName(name);
-
-        if (problem != null) {
-
-            showError(problem, nameField);
-
-            nameField.requestFocusInWindow();
-
-            return;
-        }
-
-        try {
-
-            levelSpinner.commitEdit();
-
-        } catch (ParseException ex) {
-
-            showError(
-                    "Level harus berupa angka",
-                    levelSpinner
-            );
-
-            return;
-        }
-
-        CharacterType role =
-                (CharacterType) roleBox.getSelectedItem();
-
-        int level =
-                (Integer) levelSpinner.getValue();
-
-        try {
-
-            manager.addCharacter(
-                    new Character(name, role, level)
-            );
-
-        } catch (IllegalArgumentException ex) {
-
-            showError(
-                    ex.getMessage(),
-                    levelSpinner
-            );
-
-            return;
-        }
-
-        nameField.setText("");
-
-        roleBox.setSelectedIndex(0);
-
-        levelSpinner.setValue(1);
-
-        showSuccess("Tersimpan: " + name);
-
-        nameField.requestFocusInWindow();
-
-        onAdded.run();
-    }
-
+    // VALIDASI NAMA
+    // URUTAN: KELENGKAPAN -> PANJANG -> FORMAT -> KEUNIKAN
     private String validateName(String name) {
 
-        if (name.isEmpty()) {
-            return "Nama wajib diisi";
+        // 1. KELENGKAPAN
+        if (name == null || name.isEmpty()) {
+            return "Nama karakter wajib diisi.";
         }
 
-        if (name.length() < 3 || name.length() > 20) {
-            return "Nama harus 3-20 karakter";
+        // 2. PANJANG
+        if (name.length() < 2 || name.length() > 20) {
+            return "Nama harus terdiri dari 2 sampai 20 karakter.";
         }
 
-        if (!name.matches("[A-Za-z ]+")) {
-            return "Nama hanya huruf dan spasi";
+        // 3. FORMAT
+        if (name.contains("  ")) {
+            return "Nama tidak boleh mengandung spasi ganda.";
         }
 
+        if (!name.matches("[\\p{L}]+(?: [\\p{L}]+)*")) {
+            return "Nama hanya boleh berisi huruf dan satu spasi.";
+        }
+
+        // 4. KEUNIKAN
         if (manager.isNameTaken(name)) {
-            return "Nama sudah dipakai";
+            return "Nama karakter tersebut sudah digunakan.";
         }
 
         return null;
     }
 
+    // MENYIMPAN KARAKTER
+    private void onSave() {
+
+        resetValidation();
+
+        // MEMBERSIHKAN INPUT
+        String name = txtName.getText().trim();
+
+        // VALIDASI NAMA
+        String errorMessage = validateName(name);
+
+        if (errorMessage != null) {
+
+            showError(
+                    errorMessage,
+                    txtName,
+                    AppTheme.ERROR_BORDER
+            );
+
+            return;
+        }
+
+        // COMMIT EDIT SPINNER
+        try {
+
+            spnLevel.commitEdit();
+
+        } catch (ParseException ex) {
+
+            showError(
+                    "Masukkan level berupa angka yang valid.",
+                    spnLevel,
+                    AppTheme.ERROR_BORDER
+            );
+
+            return;
+        }
+
+        // MEMBACA ROLE
+        CharacterType role;
+
+        try {
+
+            role = (CharacterType) cmbRole.getSelectedItem();
+
+        } catch (ClassCastException ex) {
+
+            showError(
+                    "Pilihan role tidak valid.",
+                    cmbRole,
+                    AppTheme.ERROR_BORDER
+            );
+
+            return;
+        }
+
+        // MEMBACA LEVEL
+        int level;
+
+        try {
+
+            level = ((Number) spnLevel.getValue()).intValue();
+
+        } catch (ClassCastException ex) {
+
+            showError(
+                    "Level harus berupa angka.",
+                    spnLevel,
+                    AppTheme.ERROR_BORDER
+            );
+
+            return;
+        }
+
+        // MEMBUAT DAN MENYIMPAN KARAKTER
+        try {
+
+            Character character = new Character(
+                    name,
+                    role,
+                    level
+            );
+
+            boolean added = manager.addCharacter(character);
+
+            if (!added) {
+
+                showError(
+                        "Nama karakter tersebut sudah digunakan.",
+                        txtName,
+                        AppTheme.ERROR_BORDER
+                );
+
+                return;
+            }
+
+            lblMessage.setForeground(AppTheme.SUCCESS);
+
+            lblMessage.setText(
+                    "Karakter " + name + " berhasil ditambahkan!"
+            );
+
+            txtName.setText("");
+            cmbRole.setSelectedIndex(0);
+            spnLevel.setValue(1);
+
+            resetBordersOnly();
+
+            onCharacterAdded.run();
+
+            txtName.requestFocusInWindow();
+
+        } catch (IllegalArgumentException ex) {
+
+            // PESAN ERROR BERASAL DARI MODEL
+            showError(
+                    ex.getMessage(),
+                    spnLevel,
+                    AppTheme.ERROR_BORDER
+            );
+        }
+    }
+
+    // MENAMPILKAN PESAN ERROR
     private void showError(
-            String text,
-            JComponent source) {
+            String message,
+            JComponent component,
+            Border errorBorder
+    ) {
 
-        messageLabel.setText(text);
+        lblMessage.setForeground(AppTheme.DANGER);
+        lblMessage.setText(message);
 
-        messageLabel.setForeground(AppTheme.ERROR);
-
-        source.setBorder(
-                BorderFactory.createLineBorder(
-                        AppTheme.ERROR, 2
-                )
-        );
+        component.setBorder(errorBorder);
+        component.requestFocusInWindow();
     }
 
-    private void showSuccess(String text) {
+    // MEMULIHKAN BORDER
+    private void resetBordersOnly() {
 
-        messageLabel.setText(text);
-
-        messageLabel.setForeground(AppTheme.SUCCESS);
+        txtName.setBorder(originalNameBorder);
+        cmbRole.setBorder(originalRoleBorder);
+        spnLevel.setBorder(originalLevelBorder);
     }
 
-    private void clearMessage() {
+    private void resetValidation() {
 
-        messageLabel.setText(" ");
+        resetBordersOnly();
 
-        nameField.setBorder(nameBorder);
-
-        levelSpinner.setBorder(levelBorder);
+        lblMessage.setForeground(AppTheme.MUTED);
+        lblMessage.setText(" ");
     }
 }

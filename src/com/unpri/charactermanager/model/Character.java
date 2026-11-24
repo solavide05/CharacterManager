@@ -1,6 +1,6 @@
-
 package com.unpri.charactermanager.model;
 
+import java.util.Locale;
 import java.util.Objects;
 
 public class Character {
@@ -17,9 +17,18 @@ public class Character {
 
     // KONSTRUKTOR UTAMA
     public Character(String name, CharacterType type, int level) {
-        this(0, name, type, level,
-                100 + level * 10,
-                10 + level * 5);
+
+        validateName(name);
+        validateType(type);
+        validateLevel(level);
+        validateMageLevel(type, level);
+
+        this.id = ++totalCharacterCreated;
+        this.name = name.trim();
+        this.type = type;
+        this.level = level;
+
+        updateStats();
     }
 
     // KONSTRUKTOR DENGAN DATA LENGKAP
@@ -29,50 +38,73 @@ public class Character {
             CharacterType type,
             int level,
             int hitPoints,
-            int attackPower) {
+            int attackPower
+    ) {
 
-        // VALIDASI NAMA
-        if (name == null || name.trim().isEmpty()) {
-            throw new IllegalArgumentException(
-                    "Nama tidak boleh kosong."
-            );
-        }
-
-        // VALIDASI ROLE
-        if (type == null) {
-            throw new IllegalArgumentException(
-                    "Role wajib dipilih."
-            );
-        }
-
-        // VALIDASI LEVEL
-        if (level < 1 || level > 99) {
-            throw new IllegalArgumentException(
-                    "Level harus antara 1 sampai 99."
-            );
-        }
-
-        // MINI-CHALLENGE: BATAS LEVEL MAGE
+        validateName(name);
+        validateType(type);
+        validateLevel(level);
         validateMageLevel(type, level);
 
         this.id = id;
-        this.name = name;
+        this.name = name.trim();
         this.type = type;
         this.level = level;
         this.hitPoints = hitPoints;
         this.attackPower = attackPower;
-        this.mana = 0;
+        this.mana = level * 10;
 
-        totalCharacterCreated++;
+        if (id > totalCharacterCreated) {
+            totalCharacterCreated = id;
+        }
     }
 
-    // VALIDASI KHUSUS MAGE
+    // VALIDASI NAMA
+    private void validateName(String name) {
+
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Nama karakter tidak boleh kosong."
+            );
+        }
+    }
+
+    // VALIDASI ROLE
+    private void validateType(CharacterType type) {
+
+        if (type == null) {
+            throw new IllegalArgumentException(
+                    "Role karakter harus dipilih."
+            );
+        }
+    }
+
+    // VALIDASI LEVEL
+    private void validateLevel(int level) {
+
+        if (level < 1 || level > 99) {
+            throw new IllegalArgumentException(
+                    "Level karakter harus berada di antara 1 sampai 99."
+            );
+        }
+    }
+
+    // MINI-CHALLENGE: MAGE MAKSIMAL LEVEL 60
     private void validateMageLevel(CharacterType type, int level) {
+
         if (type == CharacterType.MAGE && level > 60) {
             throw new IllegalArgumentException(
                     "Karakter dengan role MAGE maksimal memiliki level 60."
             );
         }
+    }
+
+    // UPDATE STATUS KARAKTER
+    private void updateStats() {
+
+        this.hitPoints = 100 + (level * 10);
+        this.attackPower = 10 + (level * 5);
+        this.mana = level * 10;
     }
 
     // GETTER DAN SETTER ID
@@ -90,13 +122,9 @@ public class Character {
     }
 
     public void setName(String name) {
-        if (name == null || name.trim().isEmpty()) {
-            throw new IllegalArgumentException(
-                    "Nama tidak boleh kosong."
-            );
-        }
 
-        this.name = name;
+        validateName(name);
+        this.name = name.trim();
     }
 
     // GETTER DAN SETTER ROLE
@@ -105,12 +133,8 @@ public class Character {
     }
 
     public void setType(CharacterType type) {
-        if (type == null) {
-            throw new IllegalArgumentException(
-                    "Role wajib dipilih."
-            );
-        }
 
+        validateType(type);
         validateMageLevel(type, this.level);
 
         this.type = type;
@@ -122,20 +146,14 @@ public class Character {
     }
 
     public void setLevel(int level) {
-        if (level < 1 || level > 99) {
-            throw new IllegalArgumentException(
-                    "Level harus antara 1 sampai 99."
-            );
-        }
 
+        validateLevel(level);
         validateMageLevel(this.type, level);
 
         this.level = level;
-        this.hitPoints = 100 + level * 10;
-        this.attackPower = 10 + level * 5;
+        updateStats();
     }
 
-    // GETTER DAN SETTER HP
     public int getHitPoints() {
         return hitPoints;
     }
@@ -144,7 +162,6 @@ public class Character {
         this.hitPoints = hitPoints;
     }
 
-    // GETTER DAN SETTER ATTACK POWER
     public int getAttackPower() {
         return attackPower;
     }
@@ -153,7 +170,6 @@ public class Character {
         this.attackPower = attackPower;
     }
 
-    // GETTER DAN SETTER MANA
     public int getMana() {
         return mana;
     }
@@ -162,12 +178,12 @@ public class Character {
         this.mana = mana;
     }
 
-    // STATUS KARAKTER
+    // CEK KARAKTER MASIH HIDUP
     public boolean isAlive() {
         return hitPoints > 0;
     }
 
-    // TOTAL KARAKTER YANG DIBUAT
+    // JUMLAH KARAKTER YANG PERNAH DIBUAT
     public static int getTotalCharacterCreated() {
         return totalCharacterCreated;
     }
@@ -175,11 +191,12 @@ public class Character {
     // EQUALS BERDASARKAN NAMA
     @Override
     public boolean equals(Object obj) {
+
         if (this == obj) {
             return true;
         }
 
-        if (obj == null || getClass() != obj.getClass()) {
+        if (!(obj instanceof Character)) {
             return false;
         }
 
@@ -190,20 +207,16 @@ public class Character {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name.toLowerCase());
+        return Objects.hash(name.toLowerCase(Locale.ROOT));
     }
 
-    // TOSTRING
     @Override
     public String toString() {
-        return "Character{"
-                + "id=" + id
-                + ", name='" + name + '\''
-                + ", type=" + type
-                + ", level=" + level
-                + ", hitPoints=" + hitPoints
-                + ", attackPower=" + attackPower
-                + ", mana=" + mana
-                + '}';
+
+        return name
+                + " | "
+                + type
+                + " | Level "
+                + level;
     }
 }

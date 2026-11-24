@@ -1,4 +1,3 @@
-
 import com.unpri.charactermanager.model.Character;
 import com.unpri.charactermanager.model.CharacterManager;
 import com.unpri.charactermanager.model.CharacterType;
@@ -9,43 +8,74 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // MEMBUAT CHARACTER MANAGER
         CharacterManager manager = new CharacterManager();
 
         // DATA KARAKTER AWAL
         manager.addCharacter(
-                new Character("Arjuna", CharacterType.WARRIOR, 5)
+                new Character(
+                        "Arjuna",
+                        CharacterType.WARRIOR,
+                        5
+                )
         );
 
         manager.addCharacter(
-                new Character("Merlin", CharacterType.MAGE, 3)
+                new Character(
+                        "Merlin",
+                        CharacterType.MAGE,
+                        30
+                )
         );
 
         manager.addCharacter(
-                new Character("Athena", CharacterType.ARCHER, 4)
+                new Character(
+                        "Athena",
+                        CharacterType.ARCHER,
+                        4
+                )
         );
 
         manager.addCharacter(
-                new Character("Gatotkaca", CharacterType.WARRIOR, 7)
+                new Character(
+                        "Gatotkaca",
+                        CharacterType.WARRIOR,
+                        7
+                )
         );
 
         manager.addCharacter(
-                new Character("Morgana", CharacterType.MAGE, 1)
+                new Character(
+                        "Morgana",
+                        CharacterType.MAGE,
+                        40
+                )
         );
 
         manager.addCharacter(
-                new Character("Artemis", CharacterType.ARCHER, 6)
+                new Character(
+                        "Artemis",
+                        CharacterType.ARCHER,
+                        6
+                )
         );
 
         manager.addCharacter(
-                new Character("Bima", CharacterType.WARRIOR, 8)
+                new Character(
+                        "Bima",
+                        CharacterType.WARRIOR,
+                        8
+                )
         );
 
         manager.addCharacter(
-                new Character("Circe", CharacterType.MAGE, 2)
+                new Character(
+                        "Circe",
+                        CharacterType.MAGE,
+                        20
+                )
         );
 
-        // MENAMPILKAN APLIKASI
+        // MENJALANKAN GUI
         SwingUtilities.invokeLater(() -> {
 
             MainWindow window = new MainWindow(manager);

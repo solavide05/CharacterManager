@@ -1,188 +1,97 @@
-
 package com.unpri.charactermanager.view;
 
-import com.unpri.charactermanager.model.CharacterType;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JTextField;
 import javax.swing.border.Border;
 
-public final class AppTheme {
+public class AppTheme {
 
-    private AppTheme() {
-        // Mencegah pembuatan objek AppTheme
-    }
+    public static final Color BACKGROUND =
+            new Color(20, 27, 45);
 
-    // =====================================
-    // WARNA UTAMA
-    // =====================================
+    public static final Color PANEL =
+            new Color(31, 41, 65);
 
-    public static final Color BG_MAIN =
-            Color.decode("#151526");
+    public static final Color CARD =
+            new Color(42, 54, 80);
 
-    public static final Color BG_CARD =
-            Color.decode("#22223a");
-
-    public static final Color BG_STATUS =
-            Color.decode("#0d0d1a");
-
-    public static final Color GOLD =
-            Color.decode("#f5c542");
-
-    public static final Color TEXT_MAIN =
-            Color.decode("#ffffff");
-
-    public static final Color TEXT_LIGHT =
-            Color.decode("#d0d0e0");
-
-    public static final Color TEXT_MUTED =
-            Color.decode("#9d9dbf");
-
-
-    // =====================================
-    // WARNA ERROR DAN SUKSES (AP19)
-    // =====================================
-
-    public static final Color ERROR =
-            Color.decode("#ff7675");
+    public static final Color PRIMARY =
+            new Color(59, 130, 246);
 
     public static final Color SUCCESS =
-            Color.decode("#55efc4");
+            new Color(34, 197, 94);
 
+    public static final Color DANGER =
+            new Color(239, 68, 68);
 
-    // =====================================
-    // WARNA ROLE KARAKTER
-    // =====================================
+    public static final Color TEXT =
+            new Color(241, 245, 249);
 
-    public static final Color WARRIOR_COLOR =
-            Color.decode("#e76f51");
+    public static final Color MUTED =
+            new Color(156, 163, 175);
 
-    public static final Color MAGE_COLOR =
-            Color.decode("#9b72cf");
-
-    public static final Color ARCHER_COLOR =
-            Color.decode("#55b987");
-
-    public static final Color HEALER_COLOR =
-            Color.decode("#55bde0");
-
-
-    // =====================================
-    // FONT
-    // =====================================
-
-    public static final Font FONT_TITLE =
-            new Font("Segoe UI", Font.BOLD, 24);
-
-    public static final Font FONT_SUBTITLE =
-            new Font("Segoe UI", Font.PLAIN, 12);
-
-    public static final Font FONT_CARD_TITLE =
-            new Font("Segoe UI", Font.BOLD, 16);
-
-    public static final Font FONT_BODY =
-            new Font("Segoe UI", Font.PLAIN, 13);
-
-    public static final Font FONT_STAT =
-            new Font("Segoe UI", Font.BOLD, 18);
-
-    public static final Font FONT_MONO =
-            new Font("Consolas", Font.PLAIN, 12);
-
-
-    // =====================================
-    // BORDER
-    // =====================================
-
-    public static final Border MAIN_BORDER =
-            BorderFactory.createEmptyBorder(
-                    15, 15, 15, 15
-            );
-
-    public static final Border EMPTY_BORDER =
-            BorderFactory.createEmptyBorder(
-                    5, 5, 5, 5
-            );
-
-    public static final Border CARD_BORDER =
+    public static final Border NORMAL_BORDER =
             BorderFactory.createCompoundBorder(
                     BorderFactory.createLineBorder(
-                            Color.decode("#3a3a55"), 1
+                            new Color(71, 85, 105), 1
                     ),
                     BorderFactory.createEmptyBorder(
-                            12, 14, 12, 14
+                            8, 10, 8, 10
                     )
             );
 
-    public static final Border STAT_BORDER =
+    public static final Border ERROR_BORDER =
             BorderFactory.createCompoundBorder(
                     BorderFactory.createLineBorder(
-                            GOLD, 1
+                            DANGER, 2
                     ),
                     BorderFactory.createEmptyBorder(
-                            10, 12, 10, 12
+                            7, 9, 7, 9
                     )
             );
 
+    public static Font font(int size, boolean bold) {
 
-    // =====================================
-    // WARNA BERDASARKAN ROLE
-    // =====================================
-
-    public static Color colorFor(CharacterType type) {
-
-        if (type == null) {
-            return TEXT_MUTED;
-        }
-
-        return switch (type) {
-            case WARRIOR -> WARRIOR_COLOR;
-            case MAGE -> MAGE_COLOR;
-            case ARCHER -> ARCHER_COLOR;
-            case HEALER -> HEALER_COLOR;
-        };
+        return new Font(
+                "Segoe UI",
+                bold ? Font.BOLD : Font.PLAIN,
+                size
+        );
     }
 
+    public static void styleTextField(JTextField field) {
 
-    // =====================================
-    // BORDER KARTU BERDASARKAN ROLE
-    // =====================================
+        field.setFont(font(14, false));
+        field.setForeground(TEXT);
+        field.setBackground(CARD);
+        field.setCaretColor(TEXT);
+        field.setBorder(NORMAL_BORDER);
+    }
 
-    public static Border cardBorder(CharacterType type) {
+    public static void styleButton(
+            JButton button,
+            Color color
+    ) {
 
-        return BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(
-                        colorFor(type), 1
-                ),
+        button.setFont(font(13, true));
+        button.setForeground(Color.WHITE);
+        button.setBackground(color);
+        button.setFocusPainted(false);
+        button.setBorder(
                 BorderFactory.createEmptyBorder(
-                        12, 14, 12, 14
+                        11, 20, 11, 20
+                )
+        );
+        button.setCursor(
+                new java.awt.Cursor(
+                        java.awt.Cursor.HAND_CURSOR
                 )
         );
     }
 
-
-    // =====================================
-    // DESKRIPSI ROLE
-    // =====================================
-
-    public static String describe(CharacterType type) {
-
-        if (type == null) {
-            return "Role tidak diketahui";
-        }
-
-        return switch (type) {
-            case WARRIOR ->
-                    "Petarung dengan kemampuan menyerang";
-
-            case MAGE ->
-                    "Pengguna kekuatan sihir";
-
-            case ARCHER ->
-                    "Pemanah dengan serangan jarak jauh";
-
-            case HEALER ->
-                    "Pendukung yang membantu pemulihan";
-        };
+    private AppTheme() {
     }
 }

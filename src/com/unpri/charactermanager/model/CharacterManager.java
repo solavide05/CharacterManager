@@ -1,67 +1,53 @@
-
 package com.unpri.charactermanager.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class CharacterManager {
 
-    private final ArrayList<Character> characterList;
+    private final List<Character> characters;
+
+    private static final int MAX_CHARACTERS = 20;
 
     public CharacterManager() {
-        characterList = new ArrayList<>();
+        characters = new ArrayList<>();
     }
 
-    // Menambahkan karakter dan menolak nama duplikat
+    // MENAMBAHKAN KARAKTER
     public boolean addCharacter(Character character) {
 
         if (character == null) {
-            return false;
-        }
-
-        if (findByName(character.getName()) != null) {
-            System.out.println(
-                    "Karakter " + character.getName()
-                    + " sudah ada. Penambahan ditolak."
+            throw new IllegalArgumentException(
+                    "Karakter tidak boleh kosong."
             );
+        }
+
+        if (isNameTaken(character.getName())) {
             return false;
         }
 
-        characterList.add(character);
+        if (characters.size() >= MAX_CHARACTERS) {
+            throw new IllegalArgumentException(
+                    "Daftar karakter sudah mencapai batas maksimal 20."
+            );
+        }
 
-        System.out.println(
-                "Karakter " + character.getName()
-                + " berhasil ditambahkan."
-        );
+        characters.add(character);
 
         return true;
     }
 
-    // Mencari karakter berdasarkan nama
-    public Character findByName(String name) {
-
-        if (name == null) {
-            return null;
-        }
-
-        for (Character character : characterList) {
-            if (character.getName().equals(name)) {
-                return character;
-            }
-        }
-
-        return null;
-    }
-
-    // Memeriksa nama karakter tanpa membedakan huruf besar/kecil
+    // MEMERIKSA NAMA DUPLIKAT
     public boolean isNameTaken(String name) {
 
         if (name == null) {
             return false;
         }
 
-        for (Character character : getAllCharacters()) {
+        for (Character character : characters) {
 
-            if (character.getName().equalsIgnoreCase(name)) {
+            if (character.getName().equalsIgnoreCase(name.trim())) {
                 return true;
             }
         }
@@ -69,84 +55,79 @@ public class CharacterManager {
         return false;
     }
 
-    // Menghapus karakter berdasarkan nama
+    // MENCARI KARAKTER BERDASARKAN NAMA
+    public Character findByName(String name) {
+
+        if (name == null) {
+            return null;
+        }
+
+        for (Character character : characters) {
+
+            if (character.getName().equalsIgnoreCase(name.trim())) {
+                return character;
+            }
+        }
+
+        return null;
+    }
+
+    // MENGHAPUS KARAKTER
     public boolean removeCharacter(String name) {
 
         Character character = findByName(name);
 
-        if (character == null) {
-            System.out.println(
-                    "Karakter " + name + " tidak ditemukan."
-            );
-            return false;
+        if (character != null) {
+            characters.remove(character);
+            return true;
         }
 
-        characterList.remove(character);
+        return false;
+    }
 
-        System.out.println(
-                "Karakter " + name + " berhasil dihapus."
+    // MENDAPATKAN SELURUH KARAKTER
+    public List<Character> getCharacters() {
+
+        return Collections.unmodifiableList(
+                new ArrayList<>(characters)
         );
-
-        return true;
     }
 
-    // Menghitung jumlah karakter
+    // MENGHITUNG JUMLAH KARAKTER
     public int getTotalCharacters() {
-        return characterList.size();
+        return characters.size();
     }
 
-    // Mengembalikan salinan daftar karakter
-    public ArrayList<Character> getAllCharacters() {
-        return new ArrayList<>(characterList);
-    }
-
-    // Menghitung rata-rata level karakter
+    // MENGHITUNG RATA-RATA LEVEL
     public double getAverageLevel() {
 
-        if (characterList.isEmpty()) {
-            return 0.0;
+        if (characters.isEmpty()) {
+            return 0;
         }
 
-        int totalLevel = 0;
+        int total = 0;
 
-        for (Character character : characterList) {
-            totalLevel += character.getLevel();
+        for (Character character : characters) {
+            total += character.getLevel();
         }
 
-        return (double) totalLevel / characterList.size();
+        return (double) total / characters.size();
     }
 
-    // Mencari karakter berdasarkan tipe
-    public ArrayList<Character> findByType(CharacterType type) {
+    // MENDAPATKAN KARAKTER TERKUAT
+    public Character getStrongestCharacter() {
 
-        ArrayList<Character> result = new ArrayList<>();
-
-        if (type == null) {
-            return result;
-        }
-
-        for (Character character : characterList) {
-            if (character.getType() == type) {
-                result.add(character);
-            }
-        }
-
-        return result;
-    }
-
-    // Mencari karakter dengan attack power tertinggi
-    public Character findStrongest() {
-
-        if (characterList.isEmpty()) {
+        if (characters.isEmpty()) {
             return null;
         }
 
-        Character strongest = characterList.get(0);
+        Character strongest = characters.get(0);
 
-        for (Character character : characterList) {
+        for (Character character : characters) {
 
             if (character.getAttackPower()
                     > strongest.getAttackPower()) {
+
                 strongest = character;
             }
         }
