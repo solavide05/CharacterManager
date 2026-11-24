@@ -11,12 +11,13 @@ public class Main {
 
         ArrayList<Character> characters = new ArrayList<>();
 
+        // DATA KARAKTER
         characters.add(
                 new Character("Arjuna", CharacterType.WARRIOR, 5)
         );
 
         characters.add(
-                new Character("Merlin", CharacterType.MAGE, 6)
+                new Character("Merlin", CharacterType.MAGE, 3)
         );
 
         characters.add(
@@ -24,34 +25,29 @@ public class Main {
         );
 
         characters.add(
-                new Character("Gatotkaca", CharacterType.WARRIOR, 8)
+                new Character("Gatotkaca", CharacterType.WARRIOR, 7)
         );
 
         characters.add(
-                new Character("Morgana", CharacterType.MAGE, 5)
+                new Character("Morgana", CharacterType.MAGE, 1)
         );
 
         characters.add(
-                new Character("Robin", CharacterType.ARCHER, 8)
+                new Character("Artemis", CharacterType.ARCHER, 6)
         );
 
-        // Menghitung rata-rata level
-        double totalLevel = 0;
+        characters.add(
+                new Character("Bima", CharacterType.WARRIOR, 8)
+        );
 
-        for (Character character : characters) {
-            totalLevel += character.getLevel();
-        }
+        characters.add(
+                new Character("Circe", CharacterType.MAGE, 2)
+        );
 
-        double averageLevel =
-                totalLevel / characters.size();
-
-        // Menampilkan aplikasi
+        // MENAMPILKAN APLIKASI
         SwingUtilities.invokeLater(() -> {
 
-            MainWindow window = new MainWindow(
-                    characters,
-                    averageLevel
-            );
+            MainWindow window = new MainWindow(characters);
 
             window.setVisible(true);
         });
