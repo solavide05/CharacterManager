@@ -1,125 +1,32 @@
-# Character Manager
+# Character Manager – AP16 TP12
 
-Project Java Visual untuk mata kuliah Java Visual (SIH-6406). Project ini dikembangkan secara bertahap menggunakan konsep Object-Oriented Programming (OOP), Java Swing, dan pola arsitektur Model-View-Controller (MVC).
+## Sprint #5: Layout, UI Responsif & Analisis MVC
 
----
-
-## Informasi Mahasiswa
-
-| Keterangan | Informasi |
-| :--- | :--- |
-| Nama | Sola Vide Br Surbakti |
-| NIM | 253303621205 |
-| Program Studi | Sistem Informasi |
-| Fakultas | Sains dan Teknologi |
-| Universitas | Universitas Prima Indonesia |
+**Mata Kuliah:** Java Visual  
+**Tugas:** AP16 – TP12  
+**Nama:** Sola Vide Br Surbakti  
+**NIM:** 253303621205  
+**Program Studi:** Sistem Informasi  
+**Tahun:** 2026
 
 ---
 
-## TP10 — Character Manager Sprint #4
+## 1. Deskripsi Proyek
 
-'Theming, Properti Komponen & Analisis MVC'
+Character Manager merupakan aplikasi desktop berbasis Java Swing yang digunakan untuk menampilkan dan mengelola data karakter berdasarkan nama, jenis karakter, dan level.
 
-CPMK 2 · SCPMK 4
+Pada Sprint #5, aplikasi dikembangkan dengan menerapkan Layout Manager, tampilan responsif, serta prinsip Model-View-Controller (MVC). Pengembangan ini bertujuan agar tampilan aplikasi lebih terstruktur, mudah dibaca, dan dapat menyesuaikan ukuran jendela.
 
-### A. Implementasi AppTheme
+## 2. Teknologi yang Digunakan
 
-Pada TP10, aplikasi Character Manager dikembangkan menggunakan class `AppTheme` untuk mengatur tampilan aplikasi secara terpusat.
+- Java
+- Java Swing
+- Visual Studio Code
+- Git dan GitHub
+- Layout Manager
+- Konsep Model-View-Controller (MVC)
 
-Class `AppTheme` berada di package `view` dan berisi pengaturan warna, font, border, serta method `colorFor()` untuk menentukan warna berdasarkan role karakter.
-
-Penggunaan `AppTheme` membuat tampilan aplikasi lebih konsisten dan memudahkan perubahan desain. Warna disimpan di `AppTheme`, bukan di class `Character`, karena warna merupakan bagian dari tampilan aplikasi, bukan data utama karakter.
-
-#### Komponen AppTheme
-
-- Warna latar utama dan kartu.
-- Warna teks utama dan teks emas.
-- Warna berbeda untuk setiap role karakter.
-- Logical font `SansSerif` dan `Monospaced`.
-- Border untuk panel utama, kartu, dan statistik.
-- Method `colorFor()` untuk pemetaan warna role.
-- Method `describe()` untuk memberikan deskripsi role.
-- Method `cardBorder()` untuk membuat border kartu berdasarkan role.
-
-### B. Mini-Challenge
-
-Mini-Challenge dilakukan dengan memberikan tampilan khusus kepada karakter yang memiliki level 5 atau lebih.
-
-Ketentuan tampilan:
-
-- Level 5 ke atas: teks berwarna emas dan tebal.
-- Level di bawah 5: teks berwarna putih dan normal.
-
-Batas level disimpan dalam konstanta bernama `HIGH_LEVEL_THRESHOLD` dengan nilai `5`.
-
-Logika tersebut ditempatkan pada layer View karena perubahan warna dan ketebalan teks hanya memengaruhi tampilan aplikasi, bukan data karakter.
-
-### C. Data Karakter
-
-Aplikasi menampilkan enam karakter dengan variasi level dan role sebagai berikut:
-
-| No. | Nama | Role | Level | Tampilan Nama |
-| :--- | :--- | :--- | :---: | :--- |
-| 1 | Arjuna | WARRIOR | 5 | Emas dan tebal |
-| 2 | Merlin | MAGE | 6 | Emas dan tebal |
-| 3 | Athena | ARCHER | 4 | Putih dan normal |
-| 4 | Gatotkaca | WARRIOR | 8 | Emas dan tebal |
-| 5 | Morgana | MAGE | 5 | Emas dan tebal |
-| 6 | Robin | ARCHER | 8 | Emas dan tebal |
-
-**Perhitungan rata-rata level:**
-
-(5 + 6 + 4 + 8 + 5 + 8) / 6 = 6,00
-
-Rata-rata level karakter adalah **6,00**.
-
-### D. Dua Properti Tambahan
-
-Dua properti tambahan yang diterapkan pada aplikasi adalah sebagai berikut.
-
-#### 1. ToolTipText
-
-ToolTipText digunakan untuk menampilkan informasi karakter ketika pengguna mengarahkan kursor ke kartu karakter.
-
-Informasi yang ditampilkan meliputi nama, level, HP, dan ATK. Properti ini membantu pengguna melihat detail karakter tanpa memenuhi tampilan utama aplikasi.
-
-#### 2. Accessible Description
-
-Accessible Description digunakan untuk memberikan deskripsi tambahan pada kartu karakter melalui `AccessibleContext`.
-
-Informasi yang diberikan meliputi nama karakter, role, dan level. Properti ini membantu teknologi bantu yang mendukung aksesibilitas memahami informasi komponen.
-
-### E. Screenshot Aplikasi
-
-#### Tampilan Sebelum — Character Manager v0.3
-
-Screenshot berikut menunjukkan tampilan aplikasi sebelum penerapan tema TP10.
-
-![Screenshot sebelum TP10](screenshot/TP10-sebelum-v03.png)
-
-#### Tampilan Sesudah — Character Manager v0.4
-
-Screenshot berikut menunjukkan tampilan aplikasi setelah penerapan AppTheme dan Mini-Challenge TP10.
-
-![Screenshot sesudah TP10](screenshot/TP10-sesudah-v04.png)
-
-### F. Analisis Properti dan MVC
-
-Dokumen analisis TP10 membahas lima materi berikut:
-
-1. Pola getter dan setter pada komponen Swing (JavaBeans).
-2. Penggunaan `setOpaque()` pada komponen Swing.
-3. Perbedaan `setSize()`, `setPreferredSize()`, dan `pack()`.
-4. Pemisahan tanggung jawab Model dan View dalam MVC.
-5. Penggunaan logical font dan fungsi `deriveFont()`.
-
-**Link Google Docs:**
-
-[Dokumen Analisis TP10 — Java Visual](https://docs.google.com/document/d/1eFYjkSi2Yl9ABVy_9HIFtXrytj9jmwWZWrOGL13cIOs/edit?usp=sharing)
-
----
-
-## Struktur Project
+## 3. Struktur Folder
 
 ```text
 CharacterManager/
@@ -139,93 +46,212 @@ CharacterManager/
 │                   ├── AppTheme.java
 │                   └── MainWindow.java
 │
-├── screenshot/
-│   ├── TP10-sebelum-v03.png
-│   └── TP10-sesudah-v04.png
+├── screenshots/
+│   ├── tampilan-awal.png
+│   ├── tampilan-diperlebar.png
+│   └── tampilan-diperkecil.png
 │
 └── README.md
 ```
 
----
+## 4. Data Karakter
 
-## Konsep MVC
+Aplikasi menggunakan delapan data karakter dengan jenis dan level yang berbeda.
 
-Project ini menerapkan prinsip Model-View-Controller (MVC) untuk memisahkan tanggung jawab pengelolaan data dan tampilan aplikasi.
+1. **Arjuna**
+   - Jenis: WARRIOR
+   - Level: 5
 
-### Model
+2. **Merlin**
+   - Jenis: MAGE
+   - Level: 3
 
-Model bertanggung jawab menyimpan data dan aturan karakter, seperti nama, role, level, HP, dan ATK.
+3. **Athena**
+   - Jenis: ARCHER
+   - Level: 4
 
-Class yang digunakan pada bagian ini antara lain `Character`, `CharacterType`, dan `CharacterManager`.
+4. **Gatotkaca**
+   - Jenis: WARRIOR
+   - Level: 7
 
-### View
+5. **Morgana**
+   - Jenis: MAGE
+   - Level: 1
 
-View bertanggung jawab menampilkan data karakter menggunakan Java Swing.
+6. **Artemis**
+   - Jenis: ARCHER
+   - Level: 6
 
-Class `MainWindow` digunakan untuk menampilkan dashboard, kartu karakter, dan statistik. Sementara itu, class `AppTheme` mengatur warna, font, dan border agar desain aplikasi lebih konsisten.
+7. **Bima**
+   - Jenis: WARRIOR
+   - Level: 8
 
-### Alur Program
+8. **Circe**
+   - Jenis: MAGE
+   - Level: 2
 
-Class `Main` menjadi titik awal program untuk menyiapkan data karakter, menghitung rata-rata level, dan membuka tampilan `MainWindow`.
+## 5. Penerapan Layout Manager
 
-Pemisahan tanggung jawab ini membantu menjaga struktur program agar lebih mudah dikembangkan dan dipelihara.
+Pada pengembangan ini, aplikasi menggunakan beberapa Layout Manager.
 
-### Alasan Pemisahan Tampilan dan Model
+### A. BorderLayout
 
-Pengaturan warna dan font tidak dimasukkan ke dalam class `Character` karena keduanya merupakan bagian dari tampilan aplikasi.
+BorderLayout digunakan sebagai layout utama pada MainWindow. Komponen dibagi menjadi lima bagian:
 
-Dengan menempatkan pengaturan desain di `AppTheme`, perubahan tampilan dapat dilakukan tanpa mengubah data karakter. Hal ini membantu menjaga penerapan prinsip MVC dan membuat program lebih fleksibel.
+- **NORTH:** Header dan panel statistik.
+- **CENTER:** Daftar karakter.
+- **EAST:** Legenda jenis karakter.
+- **SOUTH:** Status bar dan informasi versi.
+- **WEST:** Tidak digunakan.
 
----
+### B. GridLayout
 
-## Cara Menjalankan Project
+GridLayout digunakan pada panel statistik untuk menyusun informasi dalam dua baris dan dua kolom agar tampil teratur.
 
-Pastikan Java JDK sudah terpasang dan tersedia di terminal.
+### C. BoxLayout
 
-Buka terminal pada folder project, kemudian jalankan perintah berikut untuk melakukan kompilasi:
+BoxLayout digunakan pada panel legenda untuk menyusun jenis karakter secara vertikal.
 
-```bash
-javac -d bin src/Main.java src/com/unpri/charactermanager/model/Character.java src/com/unpri/charactermanager/model/CharacterType.java src/com/unpri/charactermanager/view/AppTheme.java src/com/unpri/charactermanager/view/MainWindow.java
+### D. JScrollPane
+
+JScrollPane digunakan untuk membungkus panel daftar karakter sehingga daftar tetap dapat diakses ketika ukuran jendela diperkecil.
+
+Kartu karakter ditambahkan ke panel daftar, bukan langsung ke JScrollPane.
+
+## 6. Panel Tambahan
+
+Panel tambahan yang dibuat adalah **Panel Statistik**.
+
+Panel ini menampilkan empat informasi utama:
+
+1. Total karakter.
+2. Rata-rata level karakter.
+3. Level tertinggi.
+4. Jumlah jenis karakter yang digunakan.
+
+Panel statistik menggunakan GridLayout dengan susunan dua baris dan dua kolom.
+
+GridLayout dipilih karena setiap informasi memiliki ruang yang sama sehingga tampilannya lebih rapi. FlowLayout tidak dipilih karena susunan komponen dapat berubah mengikuti ruang yang tersedia.
+
+## 7. Wireframe Tampilan
+
+Berikut rancangan sederhana susunan tampilan aplikasi:
+
+```text
++------------------------------------------------------+
+|                    HEADER (NORTH)                    |
++------------------------------------------------------+
+|                   PANEL STATISTIK                    |
+|  Total Karakter | Rata-rata Level                    |
+|  Level Tertinggi| Jenis Karakter                     |
++------------------------------------------+-----------+
+|                                          |           |
+|             DAFTAR KARAKTER              |  LEGENDA  |
+|                                          |           |
+|  [Arjuna]                                |  Warrior  |
+|  [Merlin]                                |  Mage     |
+|  [Athena]                                |  Archer   |
+|  [Gatotkaca]                             |  Healer   |
+|  [Morgana]                               |           |
+|  [Artemis]                               |           |
+|  [Bima]                                  |           |
+|  [Circe]                                 |           |
+|                                          |           |
++------------------------------------------+-----------+
+| STATUS BAR                     |  v0.5               |
++------------------------------------------------------+
 ```
 
-Jalankan aplikasi dengan perintah:
+## 8. Dokumentasi Screenshot
 
-```bash
-java -cp bin Main
-```
+Tambahkan tiga screenshot hasil aplikasi pada bagian berikut.
+
+### A. Tampilan Awal
+
+Screenshot aplikasi ketika pertama kali dijalankan.
+
+![Tampilan Awal](screenshots/tampilan-awal.png)
+
+### B. Bukti Screenshot Jendela Diperlebar
+
+Screenshot aplikasi setelah ukuran jendela diperlebar.
+
+![Tampilan Jendela Diperlebar](screenshots/tampilan-diperlebar.png)
+
+### C. Bukti Screenshot Jendela Diperkecil
+
+Screenshot aplikasi setelah ukuran jendela diperkecil hingga scrollbar terlihat.
+
+![Tampilan Jendela Diperkecil](screenshots/tampilan-diperkecil.png)
+
+## 9. Pengamatan Responsivitas
+
+### A. Hasil Pengamatan Tampilan Awal
+
+- Prediksi: Semua komponen terlihat dengan jelas.
+- Hasil pengamatan: Isi sesuai hasil pengujian.
+
+### B. Hasil Pengamatan Jendela Diperlebar
+
+- Prediksi: Ruang komponen menyesuaikan ukuran jendela.
+- Hasil pengamatan: Isi sesuai hasil pengujian.
+
+### C. Hasil Pengamatan Jendela Diperkecil
+
+- Prediksi: Komponen menyesuaikan ruang yang tersedia dan scrollbar terlihat jika diperlukan.
+- Hasil pengamatan: Isi sesuai hasil pengujian.
+- Prediksi: Daftar karakter dapat digulir menggunakan scrollbar.
+- Hasil pengamatan: Isi sesuai hasil pengujian.
+
+## 10. Analisis Nested Panels
+
+Nested panels adalah teknik menyusun beberapa panel di dalam panel lain untuk membagi tampilan aplikasi menjadi beberapa bagian.
+
+Pada aplikasi Character Manager, panel utama menggunakan BorderLayout. Di dalamnya terdapat panel header, panel statistik, panel daftar karakter, panel legenda, dan status bar.
+
+Penggunaan nested panels membuat susunan komponen lebih teratur dan memudahkan pengaturan setiap bagian tampilan. Selain itu, setiap panel dapat menggunakan Layout Manager yang berbeda sesuai kebutuhan.
+
+## 11. Analisis Pemilihan Layout
+
+Panel statistik menggunakan GridLayout karena empat informasi perlu ditampilkan dengan ukuran dan susunan yang sama. Layout ini membuat tampilan lebih konsisten.
+
+FlowLayout tidak dipilih untuk panel statistik karena posisi komponen dapat berpindah ketika ukuran jendela berubah. Untuk panel legenda, BoxLayout lebih sesuai karena jenis karakter disusun secara vertikal.
+
+## 12. Penerapan MVC
+
+Aplikasi menggunakan konsep Model-View-Controller (MVC).
+
+- **Model:** Menyimpan dan mengelola data karakter, seperti Character, CharacterType, dan CharacterManager.
+- **View:** Menampilkan antarmuka aplikasi menggunakan MainWindow dan AppTheme.
+- **Controller:** Mengatur hubungan antara data dan tampilan sesuai kebutuhan aplikasi.
+
+Pemisahan ini membuat kode lebih mudah dipelihara dan dikembangkan. Contohnya, tampilan daftar karakter dapat diganti menggunakan JTable tanpa harus mengubah struktur utama data karakter pada Model.
+
+## 13. Penggunaan revalidate() dan repaint()
+
+`revalidate()` digunakan untuk meminta Swing menghitung ulang tata letak komponen setelah terjadi perubahan.
+
+`repaint()` digunakan untuk meminta Swing menggambar ulang tampilan komponen.
+
+Keduanya diperlukan ketika komponen ditambahkan atau diubah setelah jendela aplikasi ditampilkan agar perubahan dapat terlihat dengan benar.
+
+## 14. Link Dokumentasi Analisis
+
+Dokumentasi analisis TP12 dibuat dalam Google Docs dengan pembahasan mengenai Layout Manager, BorderLayout, GridLayout, BoxLayout, JScrollPane, dan prinsip MVC.
+
+**Link Google Docs:**
+
+[Dokumentasi Analisis AP16 TP12](https://docs.google.com/document/d/10winHpUOzXYAxqMp81Kk-hggBwltiYe4m3MFMS4acfA/edit?usp=sharing)
+
+## 15. Kesimpulan
+
+Melalui Sprint #5, aplikasi Character Manager dikembangkan dengan menerapkan beberapa Layout Manager untuk menghasilkan tampilan yang lebih terstruktur dan responsif.
+
+Penggunaan BorderLayout, GridLayout, BoxLayout, dan JScrollPane membantu mengatur komponen sesuai fungsinya. Penambahan panel statistik juga memberikan informasi tambahan mengenai data karakter.
+
+Selain itu, penerapan konsep MVC membantu memisahkan pengelolaan data dengan tampilan aplikasi sehingga program lebih mudah dikembangkan dan dipelihara.
 
 ---
 
-## Riwayat Pengembangan TP10
-
-Branch pengerjaan:
-
-`tp10-properties-mvc`
-
-Rencana riwayat commit:
-
-1. `feat(theme): add centralized application theme`
-2. `feat(view): apply themed character dashboard`
-3. `feat(app): display six sample characters`
-4. `docs(tp10): add documentation and screenshots`
-
-Riwayat tersebut digunakan untuk menunjukkan tahapan pengembangan aplikasi secara bertahap melalui Git dan GitHub.
-
----
-
-## Teknologi
-
-- Java
-- Java Swing
-- Object-Oriented Programming (OOP)
-- Model-View-Controller (MVC)
-- Visual Studio Code
-- Git dan GitHub
-
----
-
-## Penutup
-
-Melalui TP10, aplikasi Character Manager dikembangkan dengan penerapan tema terpusat, pengaturan properti komponen Swing, dan pemisahan tanggung jawab berdasarkan konsep MVC.
-
-Pengerjaan ini membantu memahami bahwa pengaturan tampilan sebaiknya berada pada layer View, sedangkan Model berfokus pada data dan aturan karakter. Selain itu, penggunaan properti komponen Swing membantu menghasilkan aplikasi yang lebih terstruktur, konsisten, dan mudah dikembangkan.
+**Character Manager – AP16 TP12**  
+Java Visual | 2026
