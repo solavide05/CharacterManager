@@ -6,7 +6,6 @@ import com.unpri.charactermanager.model.CharacterType;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -23,11 +22,14 @@ public class MainWindow extends JFrame {
 
     private static final int HIGH_LEVEL_THRESHOLD = 5;
 
+    // Konstanta versi aplikasi
+    private static final String APP_VERSION = "v0.5";
+
     private final ArrayList<Character> characterList;
 
     public MainWindow(ArrayList<Character> characterList) {
 
-        super("Character Manager v0.5");
+        super("Character Manager " + APP_VERSION);
 
         this.characterList = characterList;
 
@@ -58,7 +60,7 @@ public class MainWindow extends JFrame {
 
         header.setBackground(AppTheme.BG_MAIN);
         header.setBorder(
-                BorderFactory.createEmptyBorder(16, 16, 8, 16)
+            BorderFactory.createEmptyBorder(16, 16, 8, 16)
         );
 
         JLabel title = new JLabel("CHARACTER MANAGER");
@@ -67,7 +69,7 @@ public class MainWindow extends JFrame {
         title.setForeground(AppTheme.GOLD);
 
         JLabel count = new JLabel(
-                characterList.size() + " karakter"
+            characterList.size() + " karakter"
         );
 
         count.setFont(AppTheme.FONT_BODY);
@@ -83,7 +85,7 @@ public class MainWindow extends JFrame {
     private JScrollPane createListArea() {
 
         JPanel cards = new JPanel(
-                new GridLayout(0, 1, 0, 8)
+            new GridLayout(0, 1, 0, 8)
         );
 
         cards.setBackground(AppTheme.BG_MAIN);
@@ -96,7 +98,7 @@ public class MainWindow extends JFrame {
 
         holder.setBackground(AppTheme.BG_MAIN);
         holder.setBorder(
-                BorderFactory.createEmptyBorder(8, 16, 8, 8)
+            BorderFactory.createEmptyBorder(8, 16, 8, 8)
         );
 
         holder.add(cards, BorderLayout.NORTH);
@@ -115,17 +117,17 @@ public class MainWindow extends JFrame {
     private JPanel createCharacterCard(Character character) {
 
         JPanel card = new JPanel(
-                new BorderLayout(12, 5)
+            new BorderLayout(12, 5)
         );
 
         card.setBackground(AppTheme.BG_CARD);
         card.setBorder(
-                AppTheme.cardBorder(character.getType())
+            AppTheme.cardBorder(character.getType())
         );
 
         card.setPreferredSize(new Dimension(650, 85));
         card.setMaximumSize(
-                new Dimension(Integer.MAX_VALUE, 90)
+            new Dimension(Integer.MAX_VALUE, 90)
         );
 
         // NAMA KARAKTER
@@ -140,25 +142,25 @@ public class MainWindow extends JFrame {
             nameLabel.setForeground(AppTheme.GOLD);
 
             nameLabel.setFont(
-                    nameLabel.getFont().deriveFont(Font.BOLD)
+                nameLabel.getFont().deriveFont(Font.BOLD)
             );
         }
 
         // TIPE KARAKTER
         JLabel typeLabel = new JLabel(
-                "Tipe: " + character.getType()
+            "Tipe: " + character.getType()
         );
 
         typeLabel.setFont(AppTheme.FONT_BODY);
         typeLabel.setForeground(
-                AppTheme.colorFor(character.getType())
+            AppTheme.colorFor(character.getType())
         );
 
         // PANEL KIRI
         JPanel leftPanel = new JPanel();
 
         leftPanel.setLayout(
-                new BoxLayout(leftPanel, BoxLayout.Y_AXIS)
+            new BoxLayout(leftPanel, BoxLayout.Y_AXIS)
         );
 
         leftPanel.setOpaque(false);
@@ -169,39 +171,39 @@ public class MainWindow extends JFrame {
 
         // DETAIL KARAKTER
         JLabel detailLabel = new JLabel(
-                "<html><div style='text-align:right;'>"
-                + "LEVEL " + character.getLevel()
-                + "<br>HP: " + character.getHitPoints()
-                + " &nbsp; | &nbsp; ATK: "
-                + character.getAttackPower()
-                + "</div></html>"
+            "<html><div style='text-align:right;'>"
+            + "LEVEL " + character.getLevel()
+            + "<br>HP: " + character.getHitPoints()
+            + " &nbsp; | &nbsp; ATK: "
+            + character.getAttackPower()
+            + "</div></html>"
         );
 
         detailLabel.setFont(AppTheme.FONT_MONO);
         detailLabel.setForeground(AppTheme.TEXT_MAIN);
         detailLabel.setHorizontalAlignment(
-                SwingConstants.RIGHT
+            SwingConstants.RIGHT
         );
 
         // TOOLTIP
         String detailTooltip =
-                character.getName()
-                + " | Level: " + character.getLevel()
-                + " | HP: " + character.getHitPoints()
-                + " | ATK: " + character.getAttackPower();
+            character.getName()
+            + " | Level: " + character.getLevel()
+            + " | HP: " + character.getHitPoints()
+            + " | ATK: " + character.getAttackPower();
 
         card.setToolTipText(detailTooltip);
         nameLabel.setToolTipText(detailTooltip);
 
         typeLabel.setToolTipText(
-                AppTheme.describe(character.getType())
+            AppTheme.describe(character.getType())
         );
 
         // AKSESIBILITAS
         card.getAccessibleContext().setAccessibleDescription(
-                "Karakter " + character.getName()
-                + ", role " + character.getType()
-                + ", level " + character.getLevel()
+            "Karakter " + character.getName()
+            + ", role " + character.getType()
+            + ", level " + character.getLevel()
         );
 
         card.add(leftPanel, BorderLayout.CENTER);
@@ -216,18 +218,18 @@ public class MainWindow extends JFrame {
         JPanel legend = new JPanel();
 
         legend.setLayout(
-                new BoxLayout(legend, BoxLayout.Y_AXIS)
+            new BoxLayout(legend, BoxLayout.Y_AXIS)
         );
 
         legend.setBackground(AppTheme.BG_MAIN);
         legend.setBorder(
-                BorderFactory.createEmptyBorder(8, 8, 8, 16)
+            BorderFactory.createEmptyBorder(8, 8, 8, 16)
         );
 
         JLabel heading = new JLabel("Legenda Role");
 
         heading.setFont(
-                AppTheme.FONT_BODY.deriveFont(Font.BOLD)
+            AppTheme.FONT_BODY.deriveFont(Font.BOLD)
         );
 
         heading.setForeground(AppTheme.TEXT_MAIN);
@@ -264,36 +266,28 @@ public class MainWindow extends JFrame {
         JPanel status = new JPanel(new BorderLayout());
 
         status.setBackground(AppTheme.BG_STATUS);
+
         status.setBorder(
-                BorderFactory.createEmptyBorder(0, 0, 0, 16)
+            BorderFactory.createEmptyBorder(6, 16, 6, 16)
         );
 
         // STATUS DI KIRI
-        JPanel leftPanel = new JPanel(
-                new FlowLayout(FlowLayout.LEFT, 16, 6)
-        );
-
-        leftPanel.setBackground(AppTheme.BG_STATUS);
-
         JLabel statusLabel = new JLabel(
-                "Total: " + characterList.size()
-                + " karakter  |  Siap"
+            "Total: " + characterList.size()
+            + " karakter  |  Siap"
         );
 
         statusLabel.setFont(AppTheme.FONT_MONO);
         statusLabel.setForeground(AppTheme.TEXT_MUTED);
 
-        leftPanel.add(statusLabel);
-
         // VERSI DI KANAN
-        JLabel versionLabel = new JLabel(
-                "Character Manager v0.5"
-        );
+        JLabel versionLabel = new JLabel(APP_VERSION);
 
         versionLabel.setFont(AppTheme.FONT_MONO);
         versionLabel.setForeground(AppTheme.TEXT_MUTED);
 
-        status.add(leftPanel, BorderLayout.WEST);
+        // KIRI DAN KANAN DALAM SATU BARIS
+        status.add(statusLabel, BorderLayout.WEST);
         status.add(versionLabel, BorderLayout.EAST);
 
         return status;
