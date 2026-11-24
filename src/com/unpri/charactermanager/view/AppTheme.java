@@ -40,6 +40,17 @@ public final class AppTheme {
 
 
     // =====================================
+    // WARNA ERROR DAN SUKSES (AP19)
+    // =====================================
+
+    public static final Color ERROR =
+            Color.decode("#ff7675");
+
+    public static final Color SUCCESS =
+            Color.decode("#55efc4");
+
+
+    // =====================================
     // WARNA ROLE KARAKTER
     // =====================================
 

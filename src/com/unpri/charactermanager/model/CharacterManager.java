@@ -52,6 +52,23 @@ public class CharacterManager {
         return null;
     }
 
+    // Memeriksa nama karakter tanpa membedakan huruf besar/kecil
+    public boolean isNameTaken(String name) {
+
+        if (name == null) {
+            return false;
+        }
+
+        for (Character character : getAllCharacters()) {
+
+            if (character.getName().equalsIgnoreCase(name)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     // Menghapus karakter berdasarkan nama
     public boolean removeCharacter(String name) {
 

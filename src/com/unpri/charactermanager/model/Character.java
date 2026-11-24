@@ -17,6 +17,7 @@ public class Character {
     private static int totalCharacterCreated = 0;
 
     public Character(String name, CharacterType type, int level) {
+
         this(0, name, type, level,
                 100 + level * 10,
                 10 + level * 5);
@@ -25,16 +26,25 @@ public class Character {
     public Character(int id, String name, CharacterType type,
                      int level, int hitPoints, int attackPower) {
 
-        if (name == null || name.trim().isEmpty()) {
-            throw new IllegalArgumentException("Nama tidak boleh kosong.");
+        // Validasi nama
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException(
+                    "Nama tidak boleh kosong"
+            );
         }
 
+        // Validasi role
         if (type == null) {
-            throw new IllegalArgumentException("Tipe karakter tidak boleh null.");
+            throw new IllegalArgumentException(
+                    "Role wajib dipilih"
+            );
         }
 
-        if (level < 1) {
-            throw new IllegalArgumentException("Level minimal adalah 1.");
+        // Validasi level
+        if (level < 1 || level > 99) {
+            throw new IllegalArgumentException(
+                    "Level harus 1-99"
+            );
         }
 
         this.id = id;
@@ -61,9 +71,13 @@ public class Character {
     }
 
     public void setName(String name) {
-        if (name == null || name.trim().isEmpty()) {
-            throw new IllegalArgumentException("Nama tidak boleh kosong.");
+
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException(
+                    "Nama tidak boleh kosong."
+            );
         }
+
         this.name = name;
     }
 
@@ -72,9 +86,13 @@ public class Character {
     }
 
     public void setType(CharacterType type) {
+
         if (type == null) {
-            throw new IllegalArgumentException("Tipe tidak boleh null.");
+            throw new IllegalArgumentException(
+                    "Tipe tidak boleh null."
+            );
         }
+
         this.type = type;
     }
 
@@ -83,8 +101,11 @@ public class Character {
     }
 
     public void setLevel(int level) {
-        if (level < 1) {
-            throw new IllegalArgumentException("Level minimal adalah 1.");
+
+        if (level < 1 || level > 99) {
+            throw new IllegalArgumentException(
+                    "Level harus 1-99"
+            );
         }
 
         this.level = level;
@@ -113,9 +134,13 @@ public class Character {
     }
 
     public void setMana(int mana) {
+
         if (mana < 0) {
-            throw new IllegalArgumentException("Mana tidak boleh negatif.");
+            throw new IllegalArgumentException(
+                    "Mana tidak boleh negatif."
+            );
         }
+
         this.mana = mana;
     }
 
@@ -130,6 +155,7 @@ public class Character {
     // Membandingkan karakter berdasarkan nama
     @Override
     public boolean equals(Object obj) {
+
         if (this == obj) {
             return true;
         }
@@ -150,6 +176,7 @@ public class Character {
 
     @Override
     public String toString() {
+
         return "Character{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
